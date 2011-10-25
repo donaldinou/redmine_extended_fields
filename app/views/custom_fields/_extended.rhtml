@@ -1,0 +1,50 @@
+<!-- TODO: class -->
+
+<script type="text/javascript">
+//<![CDATA[
+function toggle_extended_field_format() {
+    format = $('custom_field_field_format');
+    p_length = $('custom_field_min_length');
+    p_regexp = $('custom_field_regexp');
+    p_default = $('custom_field_default_value'); // TODO: replace with textarea for "text" and "wiki"
+
+    switch (format.value) {
+        case 'text':
+        case 'wiki':
+            Element.replace(p_default, new Element('textarea', { id:   'custom_field_default_value',
+                                                                 name: 'custom_field[default_value]',
+                                                                 cols: 30 }));
+            break;
+        case 'bool':
+            Element.replace(p_default, new Element('input', { type: 'checkbox',
+                                                              id:   'custom_field_default_value',
+                                                              name: 'custom_field[default_value]' }));
+            break;
+        // TODO:
+        //case 'project':
+        default:
+            Element.replace(p_default, new Element('input', { type: 'text',
+                                                              id:   'custom_field_default_value',
+                                                              name: 'custom_field[default_value]',
+                                                              size: 30 }));
+            break;
+    }
+
+    switch (format.value) {
+        case 'wiki':
+            Element.hide(p_regexp.parentNode);
+            // TODO: make default value a Wiki
+            break;
+        case 'project':
+            Element.hide(p_length.parentNode);
+            Element.hide(p_regexp.parentNode);
+            // TODO: make default value a select
+            break;
+        default:
+            break;
+    }
+}
+//]]>
+</script>
+
+<%= observe_field(:custom_field_field_format, :function => "toggle_extended_field_format();") %>
