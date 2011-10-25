@@ -18,8 +18,15 @@ module ExtendedFieldsHelperPatch
 
         def show_extended_value(custom_value)
             if custom_value
-                #format = Redmine::CustomFieldFormat.find_by_name(field_format)
-                Redmine::CustomFieldFormat.format_value(custom_value.value, custom_value.custom_field.field_format)
+                if custom_value.custom_field.has_template?
+                    ActiveSupport::SafeBuffer.new(render(:partial => custom_value.custom_field.template_file,
+                                                         :locals  => { :controller   => controller,
+                                                                       :project      => @project,
+                                                                       :request      => request,
+                                                                       :custom_field => custom_value }))
+                else
+                    Redmine::CustomFieldFormat.format_value(custom_value.value, custom_value.custom_field.field_format)
+                end
             end
         end
 

@@ -2,8 +2,6 @@ require_dependency 'custom_field'
 
 module ExtendedCustomFieldPatch # TODO: try without patching
 
-    EXTENDED_FIELD_FORMATS = %w(wiki link project)
-
     def self.included(base)
         base.send(:include, InstanceMethods)
     end
@@ -25,13 +23,13 @@ module ExtendedCustomFieldPatch # TODO: try without patching
                 @template
             else
                 filename = name.gsub(%r{[^a-z0-9_]+}i, '_').downcase
-                template = File.join(File.dirname(__FILE__), '../app/views/custom_values', field_format, "#{filename}.rhtml")
+                template = File.join(File.dirname(__FILE__), '../app/views/custom_values', field_format, "_#{filename}.rhtml")
                 if File.exists?(template)
-                    @template = template
+                    @template = "custom_values/#{field_format}/#{filename}"
                 else
-                    template = File.join(File.dirname(__FILE__), '../app/views/custom_values', field_format, "#{filename}.html.erb")
+                    template = File.join(File.dirname(__FILE__), '../app/views/custom_values/common', "_#{field_format}.rhtml")
                     if File.exists?(template)
-                        @template = template
+                        @template = "custom_values/common/#{field_format}"
                     else
                         @template = nil
                     end
@@ -39,9 +37,8 @@ module ExtendedCustomFieldPatch # TODO: try without patching
             end
         end
 
-        def extended? # TODO
-            Rails.logger.info " >>> #{template_file.inspect}" # FIXME
-            EXTENDED_FIELD_FORMATS.include?(field_format) || template_file
+        def has_template?
+            !!template_file
         end
 
     end
