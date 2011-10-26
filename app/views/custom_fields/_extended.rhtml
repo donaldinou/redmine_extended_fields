@@ -6,7 +6,7 @@ function toggle_extended_field_format() {
     format = $('custom_field_field_format');
     p_length = $('custom_field_min_length');
     p_regexp = $('custom_field_regexp');
-    p_default = $('custom_field_default_value'); // TODO: replace with textarea for "text" and "wiki"
+    p_default = $('custom_field_default_value');
 
     switch (format.value) {
         case 'text':
@@ -33,12 +33,10 @@ function toggle_extended_field_format() {
     switch (format.value) {
         case 'wiki':
             Element.hide(p_regexp.parentNode);
-            // TODO: make default value a Wiki
             break;
         case 'project':
             Element.hide(p_length.parentNode);
             Element.hide(p_regexp.parentNode);
-            // TODO: make default value a select
             break;
         default:
             break;

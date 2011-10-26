@@ -1,5 +1,4 @@
 # FIXME: issue: export_to_cvs should be using format_value
-# FIXME: show_value
 
 require_dependency 'custom_fields_helper'
 

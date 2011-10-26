@@ -1,6 +1,6 @@
 require_dependency 'custom_field'
 
-module ExtendedCustomFieldPatch # TODO: try without patching
+module ExtendedCustomFieldPatch
 
     def self.included(base)
         base.send(:include, InstanceMethods)

@@ -5,11 +5,13 @@ require_dependency 'extended_fields_hook'
 
 # TODO: + Hint to custom fields form + inline hint
 # TODO: support CSS class?
-# TODO: rewrite custom_field_tag/custom_field_tag_for_bulk_edit (add "wiki")?
 
-# FIXME:
-#link = (value =~ %r{^https?://}) ? value : 'http://' + value
-#ActiveSupport::SafeBuffer.new('<a href="' + h(link) + '" class="external">' + h(value) + '</a>')
+# TODO:
+#  o CustomField#cast_value
+#  o CustomField#order_statement
+#  o Query#add_custom_fields_filters
+#  o CustomFieldsHelper:custom_field_tag
+#  o CustomFieldsHelper:custom_field_tag_for_bulk_edit
 
 RAILS_DEFAULT_LOGGER.info 'Starting Extended Fields plugin for Redmine'
 
