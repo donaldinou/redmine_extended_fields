@@ -2,9 +2,9 @@ require 'redmine'
 require 'dispatcher'
 
 require_dependency 'extended_fields_hook'
+require_dependency 'extended_profile_hook' # PROFILE
 
-# TODO: + Hint to custom fields form + inline hint
-# TODO: support CSS class?
+# TODO: custom_field_tag should add <em>hint</em>
 
 # TODO:
 #  o CustomField#cast_value
@@ -12,6 +12,8 @@ require_dependency 'extended_fields_hook'
 #  o Query#add_custom_fields_filters
 #  o CustomFieldsHelper:custom_field_tag
 #  o CustomFieldsHelper:custom_field_tag_for_bulk_edit
+
+# TODO: limit fields shown on registration
 
 RAILS_DEFAULT_LOGGER.info 'Starting Extended Fields plugin for Redmine'
 
@@ -35,5 +37,5 @@ Redmine::Plugin.register :extended_fields_plugin do
     author 'Andriy Lesyuk'
     author_url 'http://www.andriylesyuk.com'
     description 'Adds new custom field types which can be used in user profile.'
-    version '1.0.0'
+    version '0.0.1'
 end
