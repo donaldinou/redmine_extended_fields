@@ -1,7 +1,8 @@
-<!-- TODO: class -->
+<% projects = Project.all_public.active(:order => 'name').collect{ |project| [ project.id, project.name ] } %>
 
 <script type="text/javascript">
 //<![CDATA[
+var projects = <%= projects.to_json %>;
 function toggle_extended_field_format() {
     format = $('custom_field_field_format');
     p_length = $('custom_field_min_length');
@@ -13,15 +14,27 @@ function toggle_extended_field_format() {
         case 'wiki':
             Element.replace(p_default, new Element('textarea', { id:   'custom_field_default_value',
                                                                  name: 'custom_field[default_value]',
-                                                                 cols: 30 }));
+                                                                 cols: 40,
+                                                                 rows: 15 }));
             break;
         case 'bool':
             Element.replace(p_default, new Element('input', { type: 'checkbox',
                                                               id:   'custom_field_default_value',
                                                               name: 'custom_field[default_value]' }));
             break;
-        // TODO:
-        //case 'project':
+        case 'project': // FIXME: blank?
+            var select = new Element('select', { id:   'custom_field_default_value',
+                                                name: 'custom_field[default_value]' });
+            select.insert(new Element('option'));
+            for (var i = 0; i < projects.length; i++) {
+                var option = new Element('option', { value: projects[i][0] }).update(projects[i][1])
+                if (<%= custom_field.default_value.to_i %> == projects[i][0]) {
+                    option.selected = true;
+                }
+                select.insert(option);
+            }
+            Element.replace(p_default, select);
+            break;
         default:
             Element.replace(p_default, new Element('input', { type: 'text',
                                                               id:   'custom_field_default_value',
@@ -42,9 +55,10 @@ function toggle_extended_field_format() {
             break;
     }
 }
+Event.observe(window, 'load', toggle_extended_field_format);
 //]]>
 </script>
 
 <p><%= form.text_field(:hint, :size => 50) %></p>
 
-<%= observe_field(:custom_field_field_format, :function => "toggle_extended_field_format();") %>
+<%= observe_field(:custom_field_field_format, :function => 'toggle_extended_field_format();') %>

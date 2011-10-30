@@ -7,7 +7,7 @@ class ProjectCustomFieldFormat < Redmine::CustomFieldFormat
     end
 
     def edit_as
-        'list'
+        'project'
     end
 
 end

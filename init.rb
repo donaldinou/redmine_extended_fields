@@ -4,16 +4,12 @@ require 'dispatcher'
 require_dependency 'extended_fields_hook'
 require_dependency 'extended_profile_hook' # PROFILE
 
-# TODO: custom_field_tag should add <em>hint</em>
-
 # TODO:
 #  o CustomField#cast_value
 #  o CustomField#order_statement
 #  o Query#add_custom_fields_filters
 #  o CustomFieldsHelper:custom_field_tag
 #  o CustomFieldsHelper:custom_field_tag_for_bulk_edit
-
-# TODO: limit fields shown on registration
 
 RAILS_DEFAULT_LOGGER.info 'Starting Extended Fields plugin for Redmine'
 
@@ -26,6 +22,9 @@ end
 Dispatcher.to_prepare :extended_fields_plugin do
     unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
         CustomField.send(:include, ExtendedCustomFieldPatch)
+    end
+    unless CustomValue.included_modules.include?(ExtendedCustomValuePatch)
+        CustomValue.send(:include, ExtendedCustomValuePatch)
     end
     unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
         CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)

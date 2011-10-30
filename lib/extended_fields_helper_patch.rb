@@ -9,7 +9,7 @@ module ExtendedFieldsHelperPatch
         base.class_eval do
             unloadable
 
-            alias_method :show_value, :show_extended_value
+            alias_method       :show_value,       :show_extended_value
             alias_method_chain :custom_field_tag, :extended
         end
     end
@@ -43,6 +43,13 @@ module ExtendedFieldsHelperPatch
                 case field_format.try(:edit_as)
                 when 'string', 'link'
                     tag = text_field_tag(field_name, custom_value.value, :id => field_id, :class => field_class)
+                when 'project'
+                    blank = custom_field.is_required? ?
+                           (custom_field.default_value.blank? ? content_tag(:option, "--- #{l(:actionview_instancetag_blank_option)} ---") : '') :
+                            content_tag(:option)
+                    tag = select_tag(field_name,
+                                     blank + options_for_select(custom_field.possible_values_options(custom_value.customized), custom_value.value),
+                                     :id => field_id, :class => field_class)
                 else
                     tag = custom_field_tag_without_extended(name, custom_value)
                 end
@@ -52,11 +59,13 @@ module ExtendedFieldsHelperPatch
 
             unless custom_field.hint.blank?
                 tag << '<br />'
-                tag << content_tag(:em, custom_field.hint)
+                tag << content_tag(:em, h(custom_field.hint))
             end
 
             tag
         end
+
+        # TODO: custom_field_tag_for_bulk_edit
 
     end
 
