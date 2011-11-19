@@ -2,14 +2,10 @@ require 'redmine'
 require 'dispatcher'
 
 require_dependency 'extended_fields_hook'
-require_dependency 'extended_profile_hook' # PROFILE
 
-# TODO:
-#  o CustomField#cast_value
-#  o CustomField#order_statement
-#  o Query#add_custom_fields_filters
-#  o CustomFieldsHelper:custom_field_tag
-#  o CustomFieldsHelper:custom_field_tag_for_bulk_edit
+if File.exist?(File.join(File.dirname(__FILE__), 'lib/extended_profile_hook.rb'))
+    require_dependency 'extended_profile_hook'
+end
 
 RAILS_DEFAULT_LOGGER.info 'Starting Extended Fields plugin for Redmine'
 
@@ -28,6 +24,10 @@ Dispatcher.to_prepare :extended_fields_plugin do
     end
     unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
         CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
+    end
+    unless WikiController.included_modules.include?(CustomFieldsHelper) # FIXME: profile
+        WikiController.send(:helper, :custom_fields)
+        WikiController.send(:include, CustomFieldsHelper)
     end
 end
 

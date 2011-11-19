@@ -5,6 +5,7 @@
 var projects = <%= projects.to_json %>;
 function toggle_extended_field_format() {
     format = $('custom_field_field_format');
+    required = $('custom_field_is_required');
     p_length = $('custom_field_min_length');
     p_regexp = $('custom_field_regexp');
     p_default = $('custom_field_default_value');
@@ -22,15 +23,23 @@ function toggle_extended_field_format() {
                                                               id:   'custom_field_default_value',
                                                               name: 'custom_field[default_value]' }));
             break;
-        case 'project': // FIXME: blank?
+        case 'project':
             var select = new Element('select', { id:   'custom_field_default_value',
-                                                name: 'custom_field[default_value]' });
-            select.insert(new Element('option'));
+                                                 name: 'custom_field[default_value]' });
+            if (required.checked) {
+                <% if custom_field.default_value.blank? %>
+                select.insert(new Element('option').update('<%= "--- #{l(:actionview_instancetag_blank_option)} ---" %>'));
+                <% end %>
+            } else {
+                select.insert(new Element('option'));
+            }
             for (var i = 0; i < projects.length; i++) {
                 var option = new Element('option', { value: projects[i][0] }).update(projects[i][1])
-                if (<%= custom_field.default_value.to_i %> == projects[i][0]) {
+                <% unless custom_field.default_value.blank? %>
+                if (projects[i][0] == <%= custom_field.default_value.to_i %>) {
                     option.selected = true;
                 }
+                <% end %>
                 select.insert(option);
             }
             Element.replace(p_default, select);

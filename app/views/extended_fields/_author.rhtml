@@ -1,0 +1,40 @@
+<% company = custom_value_for_user('Company', user) %>
+<% if company %>
+  <% company_site = custom_value_for_user('Company website', user) %>
+  <% if company_site %>
+    <% link = (company_site.value =~ %r{^https?://}) ? company_site.value : "http://#{company_site.value}" %>
+    <%= link_to(h(show_value(company)), link, :class => 'company') %>
+  <% else %>
+    <p class="company"><%= h(show_value(company)) %></p>
+  <% end %>
+<% end %>
+
+<% position = custom_value_for_user('Position', user) %>
+<% if position %>
+  <p class="position"><%= h(show_value(position)) %></p>
+<% end %>
+
+<% blog = custom_value_for_user('Blog', user) %>
+<% facebook = custom_value_for_user('Facebook', user) %>
+<% twitter = custom_value_for_user('Twitter', user) %>
+<% linkedin = custom_value_for_user('LinkedIn', user) %>
+<% if blog || facebook || twitter || linkedin %>
+  <p class="icons">
+    <% if blog %>
+      <% link = (blog.value =~ %r{^https?://}) ? blog.value : "http://#{blog.value}" %>
+      <%= link_to(image_tag('blog.png', :plugin => 'extended_fields'), link) %>
+    <% end %>
+    <% if facebook %>
+      <% link = facebook.value.match(%r{^[0-9]+$}) ? "http://www.facebook.com/profile.php?id=#{facebook.value}" : "http://www.facebook.com/#{facebook.value}" %>
+      <%= link_to(image_tag('facebook.png', :plugin => 'extended_fields'), link) %>
+    <% end %>
+    <% if twitter %>
+      <% link = "http://twitter.com/#{twitter.value}" %>
+      <%= link_to(image_tag('twitter.png', :plugin => 'extended_fields'), link) %>
+    <% end %>
+    <% if linkedin %>
+      <% link = (linkedin.value =~ %r{^https?://}) ? linkedin.value : "http://#{linkedin.value}" %>
+      <%= link_to(image_tag('linkedin.png', :plugin => 'extended_fields'), link) %>
+    <% end %>
+  </p>
+<% end %>
