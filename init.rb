@@ -32,5 +32,5 @@ Redmine::Plugin.register :extended_fields_plugin do
     author_url 'http://www.andriylesyuk.com'
     description 'Adds new custom field types: Wiki text, Link and Project.'
     url 'http://projects.andriylesyuk.com/projects/redmine-fields'
-    version '0.0.1'
+    version '0.0.1b'
 end
