@@ -16,7 +16,7 @@ module ExtendedFieldsHelperPatch
 
         def show_extended_value(custom_value)
             if custom_value
-                if custom_value.custom_field.has_template?
+                if custom_value.value && !custom_value.value.empty? && custom_value.custom_field.has_template?
                     ActiveSupport::SafeBuffer.new(render(:partial => custom_value.custom_field.template_file,
                                                          :locals  => { :controller   => controller,
                                                                        :project      => @project,

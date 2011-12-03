@@ -27,7 +27,7 @@ module ExtendedCustomFieldPatch
             end
         end
 
-        #def possible_values_with_extended(obj = nil) # FIXME
+        #def possible_values_with_extended(obj = nil) # FIXME: for Redmine 1.1.x?
         #    case self.field_format
         #    when 'project':
         #        # FIXME: what if user edit?
