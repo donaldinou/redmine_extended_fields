@@ -16,7 +16,7 @@ module ExtendedCustomQueryPatch
         def add_custom_fields_filters_with_extended(custom_fields)
             add_custom_fields_filters_without_extended(custom_fields)
 
-            custom_fields.each do |field|
+            custom_fields.select(&:is_filter?).each do |field|
                 case field.field_format
                 when "project"
                     options = { :type => :list_optional, :values => field.possible_values_options, :order => 20 }
