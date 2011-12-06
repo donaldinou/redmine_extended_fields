@@ -15,6 +15,13 @@ Dispatcher.to_prepare :extended_fields_plugin do
     unless ActionView::Base.included_modules.include?(ExtendedFieldsHelper)
         ActionView::Base.send(:include, ExtendedFieldsHelper)
     end
+
+    unless defined? ActiveSupport::SafeBuffer
+        unless ActionView::Base.included_modules.include?(ExtendedHTMLEscapePatch)
+            ActionView::Base.send(:include, ExtendedHTMLEscapePatch)
+        end
+    end
+
     unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
         CustomField.send(:include, ExtendedCustomFieldPatch)
     end

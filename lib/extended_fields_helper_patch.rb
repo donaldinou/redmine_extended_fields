@@ -17,11 +17,12 @@ module ExtendedFieldsHelperPatch
         def show_extended_value(custom_value)
             if custom_value
                 if custom_value.value && !custom_value.value.empty? && (template = find_custom_field_template(custom_value.custom_field))
-                    ActiveSupport::SafeBuffer.new(render(:partial => template,
-                                                         :locals  => { :controller   => controller,
-                                                                       :project      => @project,
-                                                                       :request      => request,
-                                                                       :custom_field => custom_value }))
+                    safe_buffer = (defined? ActiveSupport::SafeBuffer) ? ActiveSupport::SafeBuffer : ActionView::SafeBuffer
+                    safe_buffer.new(render(:partial => template,
+                                           :locals  => { :controller   => controller,
+                                                         :project      => @project,
+                                                         :request      => request,
+                                                         :custom_field => custom_value }))
                 else
                     Redmine::CustomFieldFormat.format_value(custom_value.value, custom_value.custom_field.field_format)
                 end
