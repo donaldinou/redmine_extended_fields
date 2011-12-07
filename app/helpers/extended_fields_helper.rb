@@ -21,4 +21,13 @@ module ExtendedFieldsHelper
         nil
     end
 
+    def custom_value_for_user(name, user = User.current)
+        custom_field = CustomField.find_by_name_and_type(name, 'UserCustomField')
+        if custom_field
+            user.custom_value_for(custom_field)
+        else
+            nil
+        end
+    end
+
 end
