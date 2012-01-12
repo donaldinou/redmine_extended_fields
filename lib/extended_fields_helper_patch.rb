@@ -16,7 +16,8 @@ module ExtendedFieldsHelperPatch
 
         def show_extended_value(custom_value)
             if custom_value
-                if custom_value.value && !custom_value.value.empty? && (template = find_custom_field_template(custom_value.custom_field))
+                if custom_value.value && !custom_value.value.empty? && params[:format].nil? &&
+                   (template = find_custom_field_template(custom_value.custom_field))
                     safe_buffer = (defined? ActiveSupport::SafeBuffer) ? ActiveSupport::SafeBuffer : ActionView::SafeBuffer
                     safe_buffer.new(render(:partial => template,
                                            :locals  => { :controller   => controller,

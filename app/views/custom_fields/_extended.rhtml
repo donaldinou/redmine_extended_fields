@@ -50,24 +50,25 @@ function toggle_extended_field_format() {
             var select = new Element('select', { id:   'custom_field_default_value',
                                                  name: 'custom_field[default_value]' });
             if (required.checked) {
-                <% if custom_field.default_value.blank? %> // FIXME: just check default_value
-                select.insert(new Element('option').update('<%= "--- #{l(:actionview_instancetag_blank_option)} ---" %>'));
-                <% end %>
+                if (default_value == "") {
+                    select.insert(new Element('option').update('<%= "--- #{l(:actionview_instancetag_blank_option)} ---" %>'));
+                }
             } else {
                 select.insert(new Element('option'));
             }
             for (var i = 0; i < projects.length; i++) {
                 var option = new Element('option', { value: projects[i][0] }).update(projects[i][1])
-                <% unless custom_field.default_value.blank? %> // FIXME: just check default_value
-                if (projects[i][0] == <%= custom_field.default_value.to_i %>) {
+                if (projects[i][0] == default_value) {
                     option.selected = true;
                 }
-                <% end %>
                 select.insert(option);
             }
             Element.replace(p_default, select);
             break;
-        default: // FIXME: support user and version ?
+        case 'user':
+        case 'version':
+            break;
+        default:
             if ((p_default.tagName.toLowerCase() != 'input') && (p_default.type.toLowerCase() != 'text')) {
                 Element.replace(p_default, new Element('input', { type:  'text',
                                                                   id:    'custom_field_default_value',
