@@ -20,7 +20,7 @@ module ExtendedCustomFieldPatch
         def possible_values_options_with_extended(obj = nil)
             case field_format
             when 'project'
-            if obj.is_a?(User)
+                if obj.is_a?(User)
                     projects = Project.visible(obj).all
                 else
                     projects = Project.visible.all
