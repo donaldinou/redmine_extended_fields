@@ -25,7 +25,7 @@ module ExtendedFieldsHelper
         custom_field = CustomField.find_by_name_and_type(name, 'UserCustomField')
         if custom_field
             custom_value = user.custom_value_for(custom_field)
-            unless custom_value.value.blank?
+            if custom_value && !custom_value.value.blank?
                 custom_value
             else
                 nil
