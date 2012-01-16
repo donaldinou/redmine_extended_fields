@@ -24,7 +24,12 @@ module ExtendedFieldsHelper
     def custom_value_for_user(name, user = User.current)
         custom_field = CustomField.find_by_name_and_type(name, 'UserCustomField')
         if custom_field
-            user.custom_value_for(custom_field)
+            custom_value = user.custom_value_for(custom_field)
+            unless custom_value.value.blank?
+                custom_value
+            else
+                nil
+            end
         else
             nil
         end
