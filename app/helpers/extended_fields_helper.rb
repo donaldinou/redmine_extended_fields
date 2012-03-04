@@ -35,4 +35,44 @@ module ExtendedFieldsHelper
         end
     end
 
+    def extended_column_content(column, object)
+        value = column.value(object)
+
+        case object
+        when User
+            case column.name
+            when :login
+                return avatar(object, :size => 14) + link_to(h(value), edit_user_path(object))
+            when :mail
+                return mail_to(h(value))
+            when :status
+                return h(l("status_" + %w(anonymous active registered locked)[value]))
+            when :language
+                language = valid_languages.detect{ |lang| lang.to_s == value }
+                return h(ll(language.to_s, :general_lang_name))
+            end
+        end
+
+        case value
+        when CustomValue
+            return show_value(value)
+        when User
+            return link_to_user(value)
+        when Project
+            return link_to_project(value)
+        when Issue
+            return link_to_issue(value, :subject => false)
+        when Time
+            return format_time(value)
+        when Date
+            return format_date(value)
+        when TrueClass
+            return checked_image(value)
+        when FalseClass
+            return nil
+        else
+            return h(value)
+        end
+    end
+
 end

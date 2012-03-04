@@ -22,6 +22,9 @@ Dispatcher.to_prepare :extended_fields_plugin do
         end
     end
 
+    unless UsersController.included_modules.include?(ExtendedUsersControllerPatch)
+        UsersController.send(:include, ExtendedUsersControllerPatch)
+    end
     unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
         CustomField.send(:include, ExtendedCustomFieldPatch)
     end
@@ -30,6 +33,9 @@ Dispatcher.to_prepare :extended_fields_plugin do
     end
     unless Query.included_modules.include?(ExtendedCustomQueryPatch)
         Query.send(:include, ExtendedCustomQueryPatch)
+    end
+    unless User.included_modules.include?(ExtendedUserPatch)
+        User.send(:include, ExtendedUserPatch)
     end
     unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
         CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
@@ -45,7 +51,7 @@ Redmine::Plugin.register :extended_fields_plugin do
     name 'Extended fields'
     author 'Andriy Lesyuk'
     author_url 'http://www.andriylesyuk.com'
-    description 'Adds new custom field types: Wiki text, Link and Project.'
+    description 'Adds new custom field types, improves listings etc.'
     url 'http://projects.andriylesyuk.com/projects/redmine-fields'
-    version '0.0.1b'
+    version '0.1.0'
 end
