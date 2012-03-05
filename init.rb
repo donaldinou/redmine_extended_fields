@@ -47,6 +47,10 @@ Dispatcher.to_prepare :extended_fields_plugin do
         CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
     end
 
+    unless AdminController.included_modules.include?(CustomFieldsHelper)
+        AdminController.send(:helper, :custom_fields)
+        AdminController.send(:include, CustomFieldsHelper)
+    end
     unless WikiController.included_modules.include?(CustomFieldsHelper)
         WikiController.send(:helper, :custom_fields)
         WikiController.send(:include, CustomFieldsHelper)

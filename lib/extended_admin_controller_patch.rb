@@ -9,7 +9,7 @@ module ExtendedAdminControllerPatch
 
             before_filter :find_settings, :only => :projects
 
-            # TODO: alias_method_chain :projects, :extended
+            alias_method_chain :projects, :extended
         end
     end
 
@@ -18,17 +18,16 @@ module ExtendedAdminControllerPatch
         def projects_with_extended
             projects_without_extended
 
-            # TODO
-            #if params[:save] == '1'
-            #    @list_settings.save
-            #end
+            if params[:save] == '1'
+                @list_settings.save
+            end
         end
 
     private
 
         def find_settings
-            @list_settings = UserListSetting.find_by_user_id_and_list(User.current.id, :projects)
-            @list_settings = UserListSetting.new(:user_id => User.current.id, :list => :projects) unless @list_settings
+            @list_settings = UserListSetting.find_by_user_id_and_list(User.current.id, 'projects')
+            @list_settings = UserListSetting.new(:user_id => User.current.id, :list => 'projects') unless @list_settings
             @list_settings.columns = params[:c] if params[:c]
         end
 

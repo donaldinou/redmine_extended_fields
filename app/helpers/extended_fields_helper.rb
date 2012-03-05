@@ -55,6 +55,14 @@ module ExtendedFieldsHelper
             case column.name
             when :project
                 return content_tag(:span, link_to_project(object, { :action => 'settings' }, :title => object.short_description))
+            when :description
+                return textilizable(object.short_description, :project => object)
+            when :created_on
+                return format_date(value)
+            when :homepage
+                return link_to(h(value), value)
+            when :active
+                return checked_image(object.status == 1)
             end
         end
 

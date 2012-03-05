@@ -1,7 +1,7 @@
 class UserListSetting < ActiveRecord::Base
     belongs_to :user
 
-    SUPPORTED_LISTS = [ :users, :projects ]
+    SUPPORTED_LISTS = [ 'users', 'projects' ]
 
     serialize :columns, Array
 
@@ -16,13 +16,10 @@ class UserListSetting < ActiveRecord::Base
 
     def list_class
         case list
-        when :users
+        when 'users'
             User
-        when :projects
+        when 'projects'
             Project
-        else
-            Rails.logger.info " >>> #{list.inspect}"
-            User # FIXME
         end
     end
 

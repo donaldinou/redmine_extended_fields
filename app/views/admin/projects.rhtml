@@ -25,7 +25,7 @@
   <p class="buttons hide-when-print">
     <%= link_to_function(l(:button_apply), 'var project_list_form = $("project_list_form"); project_list_form.onsubmit(); project_list_form.submit();', :class => 'icon icon-checked') %>
     <%= link_to(l(:button_clear), { :controller => 'admin', :action => 'projects' }, :class => 'icon icon-reload') %>
-    <%= link_to_function(l(:button_save), 'var project_list_form = $("user_list_form"); project_list_form["save"].value = "1"; project_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-save') %>
+    <%= link_to_function(l(:button_save), 'var project_list_form = $("project_list_form"); project_list_form["save"].value = "1"; project_list_form.onsubmit(); project_list_form.submit();', :class => 'icon icon-save') %>
   </p>
 
 <% end %>

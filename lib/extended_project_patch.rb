@@ -16,7 +16,8 @@ module ExtendedProjectPatch
             ExtendedColumn.new(:is_public, :align => :center),
             ExtendedColumn.new(:created_on, :align => :center),
             ExtendedColumn.new(:updated_on, :align => :center),
-            ExtendedColumn.new(:status, :align => :center)
+            ExtendedColumn.new(:active, :align => :center)
+            # TODO: ExtendedColumn.new(:downloads, SELECT SUM(downloads) FROM attachments WHERE (container_type = 'Project' AND container_id = 1) OR (container_type = 'Version' AND container_id IN (SELECT id FROM versions WHERE project_id = 1)) :align => :center)
         ]
 
         def available_columns

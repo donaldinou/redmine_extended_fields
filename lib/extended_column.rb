@@ -11,8 +11,6 @@ class ExtendedColumn
         @css_classes = options[:css_classes] if options[:css_classes]
     end
 
-    # TODO: default_order
-
     def css_classes
         @css_classes || name
     end
