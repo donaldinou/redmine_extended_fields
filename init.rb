@@ -22,6 +22,9 @@ Dispatcher.to_prepare :extended_fields_plugin do
         end
     end
 
+    unless AdminController.included_modules.include?(ExtendedAdminControllerPatch)
+        AdminController.send(:include, ExtendedAdminControllerPatch)
+    end
     unless UsersController.included_modules.include?(ExtendedUsersControllerPatch)
         UsersController.send(:include, ExtendedUsersControllerPatch)
     end
@@ -33,6 +36,9 @@ Dispatcher.to_prepare :extended_fields_plugin do
     end
     unless Query.included_modules.include?(ExtendedCustomQueryPatch)
         Query.send(:include, ExtendedCustomQueryPatch)
+    end
+    unless Project.included_modules.include?(ExtendedProjectPatch)
+        Project.send(:include, ExtendedProjectPatch)
     end
     unless User.included_modules.include?(ExtendedUserPatch)
         User.send(:include, ExtendedUserPatch)

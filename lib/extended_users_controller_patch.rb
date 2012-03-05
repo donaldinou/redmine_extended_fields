@@ -9,21 +9,24 @@ module ExtendedUsersControllerPatch
 
             before_filter :find_settings, :only => :index
 
-            # FIXME alias_method_chain :index, :extended
+            alias_method_chain :index, :extended
         end
     end
 
     module InstanceMethods
 
-        # FIXME
-        #def index_with_extended
-        #    index_without_extended
-        #end
+        def index_with_extended
+            index_without_extended
+
+            if params[:save] == '1'
+                @list_settings.save
+            end
+        end
 
     private
 
         def find_settings
-            @list_settings = UserListSetting.find_by_user_id_and_list(User.current.id, :users)
+            @list_settings = UserListSetting.find_by_user_id_and_list(User.current.id, :users) # FIXME --- :users in DB :S
             @list_settings = UserListSetting.new(:user_id => User.current.id, :list => :users) unless @list_settings
             @list_settings.columns = params[:c] if params[:c]
         end

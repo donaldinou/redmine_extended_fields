@@ -51,6 +51,11 @@ module ExtendedFieldsHelper
                 language = valid_languages.detect{ |lang| lang.to_s == value }
                 return h(ll(language.to_s, :general_lang_name))
             end
+        when Project
+            case column.name
+            when :project
+                return content_tag(:span, link_to_project(object, { :action => 'settings' }, :title => object.short_description))
+            end
         end
 
         case value

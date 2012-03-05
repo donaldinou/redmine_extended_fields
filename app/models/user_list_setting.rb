@@ -11,7 +11,19 @@ class UserListSetting < ActiveRecord::Base
 
     def initialize(attributes = nil)
         super
-        self.columns ||= User.default_columns
+        self.columns ||= list_class.default_columns
+    end
+
+    def list_class
+        case list
+        when :users
+            User
+        when :projects
+            Project
+        else
+            Rails.logger.info " >>> #{list.inspect}"
+            User # FIXME
+        end
     end
 
     def columns=(fields)
@@ -23,9 +35,9 @@ class UserListSetting < ActiveRecord::Base
     end
 
     def columns
-        fields = read_attribute(:columns) || User.default_columns.collect{ |column| column.name }
+        fields = read_attribute(:columns) || list_class.default_columns.collect{ |column| column.name }
 
-        available_columns = User.available_columns.inject({}) do |hash, column|
+        available_columns = list_class.available_columns.inject({}) do |hash, column|
             hash[column.name] = column
             hash
         end

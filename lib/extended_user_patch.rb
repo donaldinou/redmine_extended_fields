@@ -26,7 +26,7 @@ module ExtendedUserPatch
             @@available_columns + UserCustomField.all.collect{ |column| ExtendedCustomFieldColumn.new(column) }
         end
 
-        def default_columns # FIXME
+        def default_columns
             @@available_columns.select do |column|
                 case column.name
                 when :login, :firstname, :lastname, :mail, :admin, :created_on, :last_login_on
