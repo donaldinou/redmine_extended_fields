@@ -73,6 +73,8 @@ module ExtendedFieldsHelper
             return link_to_user(value)
         when Project
             return link_to_project(value)
+        when Version
+            return link_to(h(value), :controller => 'versions', :action => 'show', :id => value)
         when Issue
             return link_to_issue(value, :subject => false)
         when Time

@@ -4,3 +4,6 @@ ru:
 
   field_is_for_new: Во время регистрации
   field_hint: Подсказка
+
+  label_latest_version: Последняя версия
+  field_open_issues: Открытые задачи

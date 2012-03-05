@@ -3,7 +3,7 @@
     <td style="padding-left: 0;">
       <%= label_tag('available_columns', l(:description_available_columns)) %><br />
       <%= select_tag('available_columns',
-                     options_for_select((object.available_columns - @list_settings.columns).collect{ |column| [ column.caption, column.name ]}), # TODO: sort
+                     options_for_select((object.available_columns - @list_settings.columns).collect{ |column| [ column.caption, column.name ]}.sort{ |a, b| a[0] <=> b[0] }),
                      :multiple => true, :size => 10, :style => 'width: 150px;',
                      :ondblclick => 'moveOptions(this.form.available_columns, this.form.selected_columns);') %>
     </td>

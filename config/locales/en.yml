@@ -4,3 +4,6 @@ en:
 
   field_is_for_new: On registration
   field_hint: Hint
+
+  label_latest_version: Latest version
+  field_open_issues: Open issues

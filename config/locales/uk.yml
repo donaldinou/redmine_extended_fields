@@ -4,3 +4,6 @@ uk:
 
   field_is_for_new: Під час реєстрації
   field_hint: Підказка
+
+  label_latest_version: Остання версія
+  field_open_issues: Відкриті завдання
