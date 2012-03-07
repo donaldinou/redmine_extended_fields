@@ -12,6 +12,8 @@ Redmine::CustomFieldFormat.map do |fields|
 end
 
 Dispatcher.to_prepare :extended_fields_plugin do
+    require_dependency 'query'
+
     unless ActionView::Base.included_modules.include?(ExtendedFieldsHelper)
         ActionView::Base.send(:include, ExtendedFieldsHelper)
     end
@@ -28,11 +30,20 @@ Dispatcher.to_prepare :extended_fields_plugin do
     unless UsersController.included_modules.include?(ExtendedUsersControllerPatch)
         UsersController.send(:include, ExtendedUsersControllerPatch)
     end
+    unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
+        CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
+    end
+    unless QueriesHelper.included_modules.include?(ExtendedQueriesHelperPatch)
+        QueriesHelper.send(:include, ExtendedQueriesHelperPatch)
+    end
     unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
         CustomField.send(:include, ExtendedCustomFieldPatch)
     end
     unless CustomValue.included_modules.include?(ExtendedCustomValuePatch)
         CustomValue.send(:include, ExtendedCustomValuePatch)
+    end
+    unless QueryCustomFieldColumn.included_modules.include?(ExtendedQueryCustomFieldColumn)
+        QueryCustomFieldColumn.send(:include, ExtendedQueryCustomFieldColumn)
     end
     unless Query.included_modules.include?(ExtendedCustomQueryPatch)
         Query.send(:include, ExtendedCustomQueryPatch)
@@ -42,9 +53,6 @@ Dispatcher.to_prepare :extended_fields_plugin do
     end
     unless User.included_modules.include?(ExtendedUserPatch)
         User.send(:include, ExtendedUserPatch)
-    end
-    unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
-        CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
     end
 
     unless AdminController.included_modules.include?(CustomFieldsHelper)

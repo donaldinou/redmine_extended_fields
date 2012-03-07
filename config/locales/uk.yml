@@ -6,4 +6,10 @@ uk:
   field_hint: Підказка
 
   label_latest_version: Остання версія
+  label_next_version: Наступна версія
+  label_tracker_column: Завдання %{tracker}
+  label_open_tracker_column: Відкриті завдання %{tracker}
+  label_issue_status_column: %{status} завдання
+  label_last_activity: Останні дії
+  label_maximum_downloads: Максимальні завантаження
   field_open_issues: Відкриті завдання

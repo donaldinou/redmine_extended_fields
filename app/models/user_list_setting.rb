@@ -32,18 +32,22 @@ class UserListSetting < ActiveRecord::Base
     end
 
     def columns
-        fields = read_attribute(:columns) || list_class.default_columns.collect{ |column| column.name }
+        if @extended_columns
+            @extended_columns
+        else
+            fields = read_attribute(:columns) || list_class.default_columns.collect{ |column| column.name }
 
-        available_columns = list_class.available_columns.inject({}) do |hash, column|
-            hash[column.name] = column
-            hash
-        end
-
-        fields.inject([]) do |array, field|
-            if available_columns[field.to_sym]
-                array << available_columns[field.to_sym]
+            available_columns = list_class.available_columns.inject({}) do |hash, column|
+                hash[column.name] = column
+                hash
             end
-            array
+
+            @extended_columns = fields.inject([]) do |array, field|
+                if available_columns[field.to_sym]
+                    array << available_columns[field.to_sym]
+                end
+                array
+            end
         end
     end
 

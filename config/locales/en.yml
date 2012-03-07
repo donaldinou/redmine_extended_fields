@@ -6,4 +6,10 @@ en:
   field_hint: Hint
 
   label_latest_version: Latest version
+  label_next_version: Next version
+  label_tracker_column: %{tracker} issues
+  label_open_tracker_column: Open %{tracker} issues
+  label_issue_status_column: %{status} issues
+  label_last_activity: Last activity
+  label_maximum_downloads: Maximum downloads
   field_open_issues: Open issues

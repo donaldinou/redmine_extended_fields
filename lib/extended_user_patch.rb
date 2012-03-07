@@ -13,13 +13,15 @@ module ExtendedUserPatch
             ExtendedColumn.new(:firstname),
             ExtendedColumn.new(:lastname),
             ExtendedColumn.new(:mail),
-            ExtendedColumn.new(:admin, :align => :center),
+            ExtendedColumn.new(:admin,  :align => :center),
             ExtendedColumn.new(:status, :align => :center),
             ExtendedColumn.new(:language),
             ExtendedColumn.new(:auth_source),
-            ExtendedColumn.new(:created_on, :align => :center),
-            ExtendedColumn.new(:updated_on, :align => :center),
-            ExtendedColumn.new(:last_login_on, :align => :center)
+            ExtendedColumn.new(:created_on,    :align => :center),
+            ExtendedColumn.new(:updated_on,    :align => :center),
+            ExtendedColumn.new(:last_login_on, :align => :center),
+            ExtendedColumn.new(:full_name,
+                               :value => lambda { |user| user.name })
         ]
 
         def available_columns

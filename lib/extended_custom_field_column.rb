@@ -8,10 +8,6 @@ class ExtendedCustomFieldColumn < ExtendedColumn
         @css_classes = "#{self.name} #{custom_field.field_format}"
     end
 
-    def css_classes
-        @css_classes
-    end
-
     def value(object)
         object.custom_values.detect{ |value| value.custom_field_id == @custom_field.id }
     end
