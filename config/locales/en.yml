@@ -9,7 +9,12 @@ en:
   label_next_version: Next version
   label_tracker_column: %{tracker} issues
   label_open_tracker_column: Open %{tracker} issues
+  label_priority_column: %{priority} issues
+  label_open_priority_column: Open %{priority} issues
   label_issue_status_column: %{status} issues
   label_last_activity: Last activity
   label_maximum_downloads: Maximum downloads
+  label_latest_downloads: Latest downloads
+  label_repository_type: Repository type
+  label_latest_files: Latest files
   field_open_issues: Open issues

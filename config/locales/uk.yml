@@ -9,7 +9,12 @@ uk:
   label_next_version: Наступна версія
   label_tracker_column: Завдання %{tracker}
   label_open_tracker_column: Відкриті завдання %{tracker}
+  label_priority_column: %{priority} завдання
+  label_open_priority_column: Відкриті %{priority} завдання
   label_issue_status_column: %{status} завдання
   label_last_activity: Останні дії
   label_maximum_downloads: Максимальні завантаження
+  label_latest_downloads: Останні завантаження
+  label_repository_type: Тип репозиторію
+  label_latest_files: Останні файли
   field_open_issues: Відкриті завдання

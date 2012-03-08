@@ -8,6 +8,8 @@ module ExtendedProjectPatch
 
     module ClassMethods
 
+        @@available_columns_cache = []
+
         @@available_columns = [
             ExtendedColumn.new(:project, :css_classes => 'name'),
             ExtendedColumn.new(:description),
@@ -21,10 +23,22 @@ module ExtendedProjectPatch
                                :value => lambda { |project| Attachment.sum(:downloads,
                                                                            :conditions => [ "(container_type = 'Project' AND container_id = ?) OR (container_type = 'Version' AND container_id IN (?))", project.id, project.versions.collect{ |version| version.id } ]) },
                                :align => :center),
+            ExtendedColumn.new(:latest_downloads,
+                               :caption => :label_latest_downloads,
+                               :value => lambda { |project| (version = project.versions.sort.reverse.select{ |version| version.closed? }.first) && version.attachments.inject(0) { |count, attachment| count += attachment.downloads } },
+                               :alig => :center),
             ExtendedColumn.new(:maximum_downloads,
                                :caption => :label_maximum_downloads,
                                :value => lambda { |project| Attachment.maximum(:downloads,
                                                                                :conditions => [ "(container_type = 'Project' AND container_id = ?) OR (container_type = 'Version' AND container_id IN (?))", project.id, project.versions.collect{ |version| version.id } ]) },
+                               :align => :center),
+            ExtendedColumn.new(:files,
+                               :caption => :label_files, # FIXME: avoid duplicates
+                               :value => lambda { |project| project.attachments.size + project.versions.inject(0) { |count, version| count += version.attachments.size } },
+                               :align => :center),
+            ExtendedColumn.new(:latest_files,
+                               :caption => :label_latest_files,
+                               :value => lambda { |project| (version = project.versions.sort.reverse.select{ |version| version.closed? }.first) && version.attachments.size },
                                :align => :center),
             ExtendedColumn.new(:latest_version,
                                :caption => :label_latest_version,
@@ -49,19 +63,40 @@ module ExtendedProjectPatch
             ExtendedColumn.new(:repository,
                                :caption => :label_repository,
                                :value => lambda { |project| !!project.repository },
+                               :align => :center),
+            ExtendedColumn.new(:repository_type,
+                               :caption => :label_repository_type,
+                               :value => lambda { |project| project.repository && (project.repository.type.is_a?(Class) ? project.repository.type.name.gsub(%r{^Repository::}, '') : project.repository.type) },
                                :align => :center)
         ]
 
         def available_columns
-            columns = @@available_columns.dup
-            Tracker.all.each do |tracker|
-                columns << ExtendedTrackerColumn.new(tracker)
-                columns << ExtendedTrackerColumn.new(tracker, :open => true)
+            if @@available_columns_cache.any?
+                @@available_columns_cache
+            else
+                @@available_columns_cache = @@available_columns.dup
+
+                Tracker.all.each do |tracker|
+                    @@available_columns_cache << ExtendedTrackerColumn.new(tracker)
+                    @@available_columns_cache << ExtendedTrackerColumn.new(tracker, :open => true)
+                end
+                IssueStatus.all.each do |status|
+                    @@available_columns_cache << ExtendedIssueStatusColumn.new(status)
+                end
+                IssuePriority.all.each do |priority|
+                    @@available_columns_cache << ExtendedPriorityColumn.new(priority)
+                    @@available_columns_cache << ExtendedPriorityColumn.new(priority, :open => true)
+                end
+                Redmine::AccessControl.available_project_modules.each do |project_module|
+                    @@available_columns_cache << ExtendedModuleColumn.new(project_module)
+                end
+
+                @@available_columns_cache += ProjectCustomField.all.collect{ |column| ExtendedCustomFieldColumn.new(column) }
+
+                # FIXME: weird bug with "Open issues"... besides maybe remove dups by caption?..
+                #@@available_columns_cache.uniq!
+                #@@available_columns_cache
             end
-            IssueStatus.all.each do |status|
-                columns << ExtendedIssueStatusColumn.new(status)
-            end
-            columns += ProjectCustomField.all.collect{ |column| ExtendedCustomFieldColumn.new(column) }
         end
 
         def default_columns
