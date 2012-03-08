@@ -65,6 +65,17 @@ Dispatcher.to_prepare :extended_fields_plugin do
     end
 end
 
+Query.add_available_column(ExtendedQueryColumn.new(:notes,
+                                                   :value => lambda { |issue| issue.journals.select{ |journal| journal.notes.present? }.size }))
+
+Query.add_available_column(ExtendedQueryColumn.new(:changes,
+                                                   :caption => :label_change_plural,
+                                                   :value => lambda { |issue| issue.journals.select{ |journal| journal.details.any? }.size }))
+
+Query.add_available_column(ExtendedQueryColumn.new(:watchers,
+                                                   :caption => :label_issue_watchers,
+                                                   :value => lambda { |issue| issue.watchers.size }))
+
 Redmine::Plugin.register :extended_fields_plugin do
     name 'Extended fields'
     author 'Andriy Lesyuk'
