@@ -21,7 +21,15 @@ module ExtendedUserPatch
             ExtendedColumn.new(:updated_on,    :align => :center),
             ExtendedColumn.new(:last_login_on, :align => :center),
             ExtendedColumn.new(:full_name,
-                               :value => lambda { |user| user.name })
+                               :value => lambda { |user| user.name }),
+            ExtendedColumn.new(:assigned_issues,
+                               :caption => :label_assigned_issues,
+                               :value => lambda { |user| Issue.count(:conditions => [ "assigned_to_id = ?", user.id ]) },
+                               :align => :center),
+            ExtendedColumn.new(:assigned_open_issues,
+                               :caption => :label_assigned_open_issues,
+                               :value => lambda { |user| Issue.open.count(:conditions => [ "assigned_to_id = ?", user.id ]) },
+                               :align => :center)
         ]
 
         def available_columns

@@ -17,4 +17,8 @@ ru:
   label_latest_downloads: Последние загрузки
   label_repository_type: Тип хранилища
   label_latest_files: Последние файлы
-  field_open_issues: Открытые задачи
+  label_project_module: Модуль %{module}
+  label_total_issues: Все задачи
+  label_total_open_issues: Все открытые задачи
+  label_assigned_issues: Назначенные задачи
+  label_assigned_open_issues: Назначенные открытые задачи

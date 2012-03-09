@@ -33,7 +33,7 @@ module ExtendedProjectPatch
                                                                                :conditions => [ "(container_type = 'Project' AND container_id = ?) OR (container_type = 'Version' AND container_id IN (?))", project.id, project.versions.collect{ |version| version.id } ]) },
                                :align => :center),
             ExtendedColumn.new(:files,
-                               :caption => :label_files, # FIXME: avoid duplicates
+                               :caption => :label_files,
                                :value => lambda { |project| project.attachments.size + project.versions.inject(0) { |count, version| count += version.attachments.size } },
                                :align => :center),
             ExtendedColumn.new(:latest_files,
@@ -48,12 +48,12 @@ module ExtendedProjectPatch
                                :caption => :label_next_version,
                                :value => lambda { |project| project.versions.sort.select{ |version| !version.closed? }.first },
                                :align => :center),
-            ExtendedColumn.new(:issues,
-                               :caption => :label_issue_plural,
+            ExtendedColumn.new(:total_issues,
+                               :caption => :label_total_issues,
                                :value => lambda { |project| project.issues.count },
                                :align => :center),
-            ExtendedColumn.new(:open_issues,
-                               :caption => :field_open_issues,
+            ExtendedColumn.new(:total_open_issues,
+                               :caption => :label_total_open_issues,
                                :value => lambda { |project| project.issues.open.count },
                                :align => :center),
             ExtendedColumn.new(:last_activity,
@@ -92,10 +92,6 @@ module ExtendedProjectPatch
                 end
 
                 @@available_columns_cache += ProjectCustomField.all.collect{ |column| ExtendedCustomFieldColumn.new(column) }
-
-                # FIXME: weird bug with "Open issues"... besides maybe remove dups by caption?..
-                #@@available_columns_cache.uniq!
-                #@@available_columns_cache
             end
         end
 

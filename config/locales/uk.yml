@@ -17,4 +17,8 @@ uk:
   label_latest_downloads: Останні завантаження
   label_repository_type: Тип репозиторію
   label_latest_files: Останні файли
-  field_open_issues: Відкриті завдання
+  label_project_module: Модуль %{module}
+  label_total_issues: Усі завдання
+  label_total_open_issues: Усі відкриті завдання
+  label_assigned_issues: Призначені завдання
+  label_assigned_open_issues: Призначені відкриті завдання
