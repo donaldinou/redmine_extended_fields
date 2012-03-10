@@ -22,3 +22,6 @@ ru:
   label_total_open_issues: Все открытые задачи
   label_assigned_issues: Назначенные задачи
   label_assigned_open_issues: Назначенные открытые задачи
+
+  description_available_columns: Доступные колонки
+  description_selected_columns: Выбранные колонки

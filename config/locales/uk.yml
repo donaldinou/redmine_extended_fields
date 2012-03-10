@@ -22,3 +22,6 @@ uk:
   label_total_open_issues: Усі відкриті завдання
   label_assigned_issues: Призначені завдання
   label_assigned_open_issues: Призначені відкриті завдання
+
+  description_available_columns: Доступні колонки
+  description_selected_columns: Вибрані колонки
