@@ -42,7 +42,7 @@ module ExtendedFieldsHelper
         when User
             case column.name
             when :login
-                return avatar(object, :size => 14) + link_to(h(value), edit_user_path(object))
+                return avatar(object, :size => 14) + link_to(h(value), :action => 'edit', :id => object)
             when :mail
                 return mail_to(h(value))
             when :status

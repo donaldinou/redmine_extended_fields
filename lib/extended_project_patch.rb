@@ -26,7 +26,7 @@ module ExtendedProjectPatch
             ExtendedColumn.new(:latest_downloads,
                                :caption => :label_latest_downloads,
                                :value => lambda { |project| (version = project.versions.sort.reverse.select{ |version| version.closed? }.first) && version.attachments.inject(0) { |count, attachment| count += attachment.downloads } },
-                               :alig => :center),
+                               :align => :center),
             ExtendedColumn.new(:maximum_downloads,
                                :caption => :label_maximum_downloads,
                                :value => lambda { |project| Attachment.maximum(:downloads,

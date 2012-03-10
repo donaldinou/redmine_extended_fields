@@ -29,6 +29,7 @@ class UserListSetting < ActiveRecord::Base
         else
             self.columns = [ fields ]
         end
+        remove_instance_variable(:@extended_columns) if instance_variable_defined?(:@extended_columns)
     end
 
     def columns

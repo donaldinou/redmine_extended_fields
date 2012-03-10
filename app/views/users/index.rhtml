@@ -1,5 +1,5 @@
 <div class="contextual">
-<%= link_to l(:label_user_new), new_user_path, :class => 'icon icon-add' %>
+<%= link_to l(:label_user_new), { :action => 'new' }, :class => 'icon icon-add' %>
 </div>
 
 <h2><%=l(:label_user_plural)%></h2>
@@ -29,7 +29,7 @@
 
   <p class="buttons hide-when-print">
     <%= link_to_function(l(:button_apply), 'var user_list_form = $("user_list_form"); user_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-checked') %>
-    <%= link_to(l(:button_clear), users_path, :class => 'icon icon-reload') %>
+    <%= link_to(l(:button_clear), { :action => 'index' }, :class => 'icon icon-reload') %>
     <%= link_to_function(l(:button_save), 'var user_list_form = $("user_list_form"); user_list_form["save"].value = "1"; user_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-save') %>
   </p>
 
@@ -55,7 +55,9 @@
     <% end %>
     <td class="buttons">
       <%= change_status_link(user) %>
-      <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
+      <% if UsersController.respond_to?(:destroy) %>
+        <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
+      <% end %>
     </td>
   </tr>
 <% end -%>
