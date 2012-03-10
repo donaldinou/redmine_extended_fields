@@ -40,7 +40,7 @@
   </tr></thead>
   <tbody>
 <% project_tree(@projects) do |project, level| %>
-  <tr class="<%= cycle("odd", "even") %> <%= project.css_classes %> <%= level > 0 ? "idnt idnt-#{level}" : nil %>">
+  <tr class="<%= cycle("odd", "even") %> <%= project.respond_to?(:css_classes) ? project.css_classes : css_project_classes(project) %> <%= level > 0 ? "idnt idnt-#{level}" : nil %>">
     <% @list_settings.columns.each do |column| %>
       <td class="<%= h(column.css_classes) %>" align="<%= h(column.align) %>"><%= extended_column_content(column, project) %></td>
     <% end %>
