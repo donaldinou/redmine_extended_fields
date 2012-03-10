@@ -5,6 +5,7 @@ ru:
   field_is_for_new: Во время регистрации
   field_hint: Подсказка
 
+  label_full_name: Полное имя
   label_latest_version: Последняя версия
   label_next_version: Следующая версия
   label_tracker_column: Задачи %{tracker}

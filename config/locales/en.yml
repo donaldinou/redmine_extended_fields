@@ -5,6 +5,7 @@ en:
   field_is_for_new: On registration
   field_hint: Hint
 
+  label_full_name: Full name
   label_latest_version: Latest version
   label_next_version: Next version
   label_tracker_column: %{tracker} issues

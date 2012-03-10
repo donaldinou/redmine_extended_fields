@@ -21,6 +21,7 @@ module ExtendedUserPatch
             ExtendedColumn.new(:updated_on,    :align => :center),
             ExtendedColumn.new(:last_login_on, :align => :center),
             ExtendedColumn.new(:full_name,
+                               :caption => :label_full_name,
                                :value => lambda { |user| user.name }),
             ExtendedColumn.new(:assigned_issues,
                                :caption => :label_assigned_issues,

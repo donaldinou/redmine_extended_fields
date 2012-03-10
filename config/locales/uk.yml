@@ -5,6 +5,7 @@ uk:
   field_is_for_new: Під час реєстрації
   field_hint: Підказка
 
+  label_full_name: Повне ім'я
   label_latest_version: Остання версія
   label_next_version: Наступна версія
   label_tracker_column: Завдання %{tracker}
