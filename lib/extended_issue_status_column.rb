@@ -1,7 +1,7 @@
 class ExtendedIssueStatusColumn < ExtendedColumn
 
     def initialize(status)
-        self.name = "#{status.name.downcase.gsub(%r{[^a-z0-9_]}i, '_')}_issues".to_sym
+        self.name = "status_#{status.position}_issues".to_sym
         self.caption = l(:label_issue_status_column, :status => status.name)
         self.align = :center
 

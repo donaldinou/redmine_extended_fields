@@ -4,10 +4,10 @@ class ExtendedPriorityColumn < ExtendedColumn
         @open = options[:open]
 
         if @open
-            self.name = "open_#{priority.name.downcase.gsub(%r{[^a-z0-9_]}i, '_')}_issues".to_sym
+            self.name = "open_priority_#{priority.position}_issues".to_sym
             self.caption = l(:label_open_priority_column, :priority => priority.name)
         else
-            self.name = "#{priority.name.downcase.gsub(%r{[^a-z0-9_]}i, '_')}_issues".to_sym
+            self.name = "priority_#{priority.position}_issues".to_sym
             self.caption = l(:label_priority_column, :priority => priority.name)
         end
         self.align = :center

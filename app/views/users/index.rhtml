@@ -37,7 +37,7 @@
 <% end %>
 
 <div class="autoscroll">
-<table class="list">
+<table class="list users-listing">
   <thead><tr>
       <% @list_settings.columns.each do |column| %>
         <% if %w(login firstname lastname mail admin created_on last_login_on).include?(column.name.to_s) %>
