@@ -8,6 +8,8 @@ module ExtendedUserPatch
 
     module ClassMethods
 
+        @@available_columns_cache = []
+
         @@available_columns = [
             ExtendedColumn.new(:login, :css_classes => 'username'),
             ExtendedColumn.new(:firstname),
@@ -34,7 +36,12 @@ module ExtendedUserPatch
         ]
 
         def available_columns
-            @@available_columns + UserCustomField.all.collect{ |column| ExtendedCustomFieldColumn.new(column) }
+            if @@available_columns_cache.any?
+                @@available_columns_cache
+            else
+                @@available_columns_cache = @@available_columns.dup
+                @@available_columns_cache += UserCustomField.all.collect{ |column| ExtendedCustomFieldColumn.new(column) }
+            end
         end
 
         def default_columns
