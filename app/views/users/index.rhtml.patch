@@ -1,9 +1,9 @@
 --- /usr/share/redmine/app/views/users/index.html.erb	2011-12-10 16:53:33.000000000 +0200
-+++ index.rhtml	2012-03-05 00:56:51.000000000 +0200
-@@ -1,49 +1,59 @@
-+<!-- FIXME add paddings for readability -->
++++ index.rhtml	2012-03-10 22:01:33.000000000 +0200
+@@ -1,52 +1,63 @@
  <div class="contextual">
- <%= link_to l(:label_user_new), new_user_path, :class => 'icon icon-add' %>
+-<%= link_to l(:label_user_new), new_user_path, :class => 'icon icon-add' %>
++<%= link_to l(:label_user_new), { :action => 'new' }, :class => 'icon icon-add' %>
  </div>
  
  <h2><%=l(:label_user_plural)%></h2>
@@ -30,7 +30,7 @@
 +  <fieldset class="collapsible collapsed">
 +    <legend onclick="toggleFieldset(this);"><%= l(:field_column_names) %></legend>
 +    <div style="display: none;">
-+      <%= render(:partial => 'custom_fields/columns') %>
++      <%= render(:partial => 'custom_fields/columns', :locals => { :object => User }) %>
 +    </div>
 +  </fieldset>
 +
@@ -38,7 +38,7 @@
 +
 +  <p class="buttons hide-when-print">
 +    <%= link_to_function(l(:button_apply), 'var user_list_form = $("user_list_form"); user_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-checked') %>
-+    <%= link_to(l(:button_clear), users_path, :class => 'icon icon-reload') %>
++    <%= link_to(l(:button_clear), { :action => 'index' }, :class => 'icon icon-reload') %>
 +    <%= link_to_function(l(:button_save), 'var user_list_form = $("user_list_form"); user_list_form["save"].value = "1"; user_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-save') %>
 +  </p>
 +
@@ -46,7 +46,8 @@
 -&nbsp;
  
  <div class="autoscroll">
- <table class="list">
+-<table class="list">
++<table class="list users-listing">
    <thead><tr>
 -  <%= sort_header_tag('login', :caption => l(:field_login)) %>
 -  <%= sort_header_tag('firstname', :caption => l(:field_firstname)) %>
@@ -79,4 +80,10 @@
 +    <% end %>
      <td class="buttons">
        <%= change_status_link(user) %>
-       <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
+-      <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
++      <% if UsersController.respond_to?(:destroy) %>
++        <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
++      <% end %>
+     </td>
+   </tr>
+ <% end -%>
