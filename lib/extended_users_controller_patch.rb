@@ -19,7 +19,6 @@ module ExtendedUsersControllerPatch
             index_without_extended
 
             if params[:save] == '1'
-                flash[:notice] = l(:notice_successful_update)
                 @list_settings.save
             end
         end
