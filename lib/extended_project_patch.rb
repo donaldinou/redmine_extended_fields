@@ -33,7 +33,7 @@ module ExtendedProjectPatch
                                                                                :conditions => [ "(container_type = 'Project' AND container_id = ?) OR (container_type = 'Version' AND container_id IN (?))", project.id, project.versions.collect{ |version| version.id } ]) },
                                :align => :center),
             ExtendedColumn.new(:files,
-                               :caption => :label_files,
+                               :caption => :label_file_plural,
                                :value => lambda { |project| project.attachments.size + project.versions.inject(0) { |count, version| count += version.attachments.size } },
                                :align => :center),
             ExtendedColumn.new(:latest_files,
