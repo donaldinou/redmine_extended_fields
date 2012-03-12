@@ -67,6 +67,10 @@ module ExtendedProjectPatch
             ExtendedColumn.new(:repository_type,
                                :caption => :label_repository_type,
                                :value => lambda { |project| project.repository && (project.repository.type.is_a?(Class) ? project.repository.type.name.gsub(%r{^Repository::}, '') : project.repository.type) },
+                               :align => :center),
+            ExtendedColumn.new(:repository_files,
+                               :caption => :label_repository_files,
+                               :value => lambda { |project| project.repository && Change.count(:path, :distinct => true, :include => [ :changeset ], :conditions => [ "repository_id = ?", project.repository.id ]) },
                                :align => :center)
         ]
 
