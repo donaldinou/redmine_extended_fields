@@ -99,6 +99,11 @@ module ExtendedProjectPatch
             end
         end
 
+        def add_available_column(column)
+            @@available_columns << column if column.is_a?(ExtendedColumn)
+            remove_class_variable(:@@available_columns_cache) if class_variable_defined?(:@@available_columns_cache)
+        end
+
         def default_columns
             @@available_columns.select do |column|
                 case column.name
