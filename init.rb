@@ -81,6 +81,6 @@ Redmine::Plugin.register :extended_fields_plugin do
     author 'Andriy Lesyuk'
     author_url 'http://www.andriylesyuk.com'
     description 'Adds new custom field types, improves listings etc.'
-    url 'http://projects.andriylesyuk.com/projects/redmine-fields'
+    url 'http://projects.andriylesyuk.com/projects/extended-fields'
     version '0.1.0'
 end
