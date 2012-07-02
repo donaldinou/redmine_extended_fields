@@ -6,13 +6,13 @@ module ExtendedFieldsHelper
 
         unless filename.empty?
             self.view_paths.each do |load_path|
-                if template = load_path["custom_values/#{custom_field.field_format}/_#{filename}"]
+                if template = load_path["custom_values/#{custom_field.field_format}/_#{filename}.html"]
                     return "custom_values/#{custom_field.field_format}/#{filename}"
                 end
             end
 
             self.view_paths.each do |load_path|
-                if template = load_path["custom_values/common/_#{custom_field.field_format}"]
+                if template = load_path["custom_values/common/_#{custom_field.field_format}.html"]
                     return "custom_values/common/#{custom_field.field_format}"
                 end
             end

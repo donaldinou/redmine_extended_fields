@@ -1,9 +1,8 @@
 require 'redmine'
-require 'dispatcher'
 
 require_dependency 'extended_fields_hook'
 
-RAILS_DEFAULT_LOGGER.info 'Starting Extended Fields plugin for Redmine'
+Rails.logger.info 'Starting Extended Fields plugin for Redmine'
 
 Redmine::CustomFieldFormat.map do |fields|
     fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => 2.1)
@@ -11,7 +10,7 @@ Redmine::CustomFieldFormat.map do |fields|
     fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => 8)
 end
 
-Dispatcher.to_prepare :extended_fields_plugin do
+Rails.configuration.to_prepare do
     require_dependency 'query'
 
     unless ActionView::Base.included_modules.include?(ExtendedFieldsHelper)
@@ -76,7 +75,7 @@ Query.add_available_column(ExtendedQueryColumn.new(:watchers,
                                                    :caption => :label_issue_watchers,
                                                    :value => lambda { |issue| issue.watchers.size }))
 
-Redmine::Plugin.register :extended_fields_plugin do
+Redmine::Plugin.register :extended_fields do
     name 'Extended fields'
     author 'Andriy Lesyuk'
     author_url 'http://www.andriylesyuk.com'
