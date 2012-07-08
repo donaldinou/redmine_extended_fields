@@ -10,9 +10,9 @@ ru:
   label_next_version: Следующая версия
   label_tracker_column: Задачи %{tracker}
   label_open_tracker_column: Открытые задачи %{tracker}
-  label_priority_column: %{priority} задачи
+  label_priority_column: "%{priority} задачи"
   label_open_priority_column: Открытые %{priority} задачи
-  label_issue_status_column: %{status} задачи
+  label_issue_status_column: "%{status} задачи"
   label_last_activity: Последние действия
   label_maximum_downloads: Максимальные загрузки
   label_latest_downloads: Последние загрузки

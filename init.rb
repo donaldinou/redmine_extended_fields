@@ -29,6 +29,9 @@ Rails.configuration.to_prepare do
     unless UsersController.included_modules.include?(ExtendedUsersControllerPatch)
         UsersController.send(:include, ExtendedUsersControllerPatch)
     end
+    unless IssuesController.included_modules.include?(ExtendedIssuesControllerPatch)
+        IssuesController.send(:include, ExtendedIssuesControllerPatch)
+    end
     unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
         CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
     end
@@ -81,5 +84,5 @@ Redmine::Plugin.register :extended_fields do
     author_url 'http://www.andriylesyuk.com'
     description 'Adds new custom field types, improves listings etc.'
     url 'http://projects.andriylesyuk.com/projects/extended-fields'
-    version '0.1.0'
+    version '0.1.1'
 end

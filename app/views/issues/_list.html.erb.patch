@@ -1,0 +1,15 @@
+--- /usr/share/redmine/app/views/issues/_list.html.erb	2012-07-08 12:04:07.000000000 +0300
++++ _list.html.erb	2012-07-08 12:08:45.000000000 +0300
+@@ -16,10 +16,11 @@
+   <% issue_list(issues) do |issue, level| -%>
+   <% if @query.grouped? && (group = @query.group_by_column.value(issue)) != previous_group %>
+     <% reset_cycle %>
++    <% group_name = group ? group.to_s : group %>
+     <tr class="group open">
+       <td colspan="<%= query.columns.size + 2 %>">
+         <span class="expander" onclick="toggleRowGroup(this);">&nbsp;</span>
+-        <%= group.blank? ? 'None' : column_content(@query.group_by_column, issue) %> <span class="count">(<%= @issue_count_by_group[group] %>)</span>
++        <%= group.blank? ? 'None' : column_content(@query.group_by_column, issue) %> <span class="count">(<%= @issue_count_by_group[group_name] %>)</span>
+         <%= link_to_function("#{l(:button_collapse_all)}/#{l(:button_expand_all)}", "toggleAllRowGroups(this)", :class => 'toggle-all') %>
+       </td>
+     </tr>
