@@ -64,13 +64,27 @@ module ExtendedProjectPatch
                                :caption => :label_repository,
                                :value => lambda { |project| !!project.repository },
                                :align => :center),
+            ExtendedColumn.new(:repositories,
+                               :caption => :label_repository_plural,
+                               :value => lambda { |project| project.respond_to?(:repositories) ? project.repositories.size : 1 },
+                               :align => :center),
             ExtendedColumn.new(:repository_type,
                                :caption => :label_repository_type,
                                :value => lambda { |project| project.repository && (project.repository.type.is_a?(Class) ? project.repository.type.name.gsub(%r{^Repository::}, '') : project.repository.type) },
                                :align => :center),
             ExtendedColumn.new(:repository_files,
                                :caption => :label_repository_files,
-                               :value => lambda { |project| project.repository && Change.count(:path, :distinct => true, :include => [ :changeset ], :conditions => [ "repository_id = ?", project.repository.id ]) },
+                               :value => lambda { |project| project.repository && (project.respond_to?(:repositories) ?
+                                                            project.repositories.inject(0) { |count, repository| Change.count(:path, :distinct => true, :include => [ :changeset ], :conditions => [ "repository_id = ?", repository.id ]) } :
+                                                            Change.count(:path, :distinct => true, :include => [ :changeset ], :conditions => [ "repository_id = ?", project.repository.id ])) },
+                               :align => :center),
+            ExtendedColumn.new(:forums,
+                               :caption => :label_board_plural,
+                               :value => lambda { |project| project.boards.size },
+                               :align => :center),
+            ExtendedColumn.new(:forum_messages,
+                               :caption => :label_forum_messages,
+                               :value => lambda { |project| project.boards.inject(0) { |count, board| count += board.messages.size } },
                                :align => :center)
         ]
 

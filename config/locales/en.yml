@@ -24,6 +24,7 @@ en:
   label_assigned_issues: Assigned issues
   label_assigned_open_issues: Assigned open issues
   label_repository_files: Repository files
+  label_forum_messages: Forum messages
 
   description_available_columns: Available Columns
   description_selected_columns: Selected Columns

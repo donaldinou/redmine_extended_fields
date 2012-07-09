@@ -24,6 +24,7 @@ uk:
   label_assigned_issues: Призначені завдання
   label_assigned_open_issues: Призначені відкриті завдання
   label_repository_files: Файлів у репозиторію
+  label_forum_messages: Повідомлень у форумах
 
   description_available_columns: Доступні колонки
   description_selected_columns: Вибрані колонки

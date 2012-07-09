@@ -24,6 +24,7 @@ ru:
   label_assigned_issues: Назначенные задачи
   label_assigned_open_issues: Назначенные открытые задачи
   label_repository_files: Файлов в хранилище
+  label_forum_messages: Сообщений в форумах
 
   description_available_columns: Доступные колонки
   description_selected_columns: Выбранные колонки
