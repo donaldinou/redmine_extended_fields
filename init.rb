@@ -4,14 +4,14 @@ require_dependency 'extended_fields_hook'
 
 Rails.logger.info 'Starting Extended Fields plugin for Redmine'
 
-Redmine::CustomFieldFormat.map do |fields|
-    fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => 2.1)
-    fields.register    LinkCustomFieldFormat.new('link',    :label => :label_link,      :order => 2.2)
-    fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => 8)
-end
-
 Rails.configuration.to_prepare do
     require_dependency 'query'
+
+    Redmine::CustomFieldFormat.map do |fields|
+        fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => 2.1)
+        fields.register    LinkCustomFieldFormat.new('link',    :label => :label_link,      :order => 2.2)
+        fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => 8)
+    end
 
     unless ActionView::Base.included_modules.include?(ExtendedFieldsHelper)
         ActionView::Base.send(:include, ExtendedFieldsHelper)

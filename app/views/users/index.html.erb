@@ -4,7 +4,7 @@
 
 <h2><%=l(:label_user_plural)%></h2>
 
-<% form_tag({}, :onsubmit => 'selectAllOptions("selected_columns");', :method => :get, :id => 'user_list_form') do %>
+<% form = form_tag({}, :onsubmit => 'selectAllOptions("selected_columns");', :method => :get, :id => 'user_list_form') do %>
 <fieldset><legend><%= l(:label_filter_plural) %></legend>
 <label for='status'><%= l(:field_status) %>:</label>
 <%= select_tag 'status', users_status_options_for_select(@status), :class => "small", :onchange => "this.form.onsubmit(); this.form.submit(); return false;"  %>
@@ -34,6 +34,7 @@
   </p>
 
 <% end %>
+<%= form if Rails::VERSION::MAJOR >= 3 %>
 
 <div class="autoscroll">
 <table class="list users-listing">
