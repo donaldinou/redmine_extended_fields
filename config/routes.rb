@@ -6,8 +6,6 @@ if Rails::VERSION::MAJOR < 3
 
 else
 
-    RedmineApp.application.routes.draw do
-        get 'projects/:id/destroy', :to => 'projects#destroy', :as => 'project_destroy_confirm'
-    end
+    get 'projects/:id/destroy', :to => 'projects#destroy', :as => 'project_destroy_confirm'
 
 end

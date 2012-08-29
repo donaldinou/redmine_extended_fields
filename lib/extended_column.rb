@@ -5,7 +5,7 @@ class ExtendedColumn
 
     def initialize(name, options = {})
         self.name = name
-        self.caption = l(options[:caption] || "field_#{name}")
+        self.caption = l(options[:caption] || "field_#{name}") # FIXME: gives translation missing: en.field_*
         self.align = options[:align] if options[:align]
 
         @value = options[:value] if options[:value]
