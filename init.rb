@@ -65,6 +65,10 @@ Rails.configuration.to_prepare do
         WikiController.send(:helper, :custom_fields)
         WikiController.send(:include, CustomFieldsHelper)
     end
+
+    if defined? ActionView::OptimizedFileSystemResolver && !ActionView::OptimizedFileSystemResolver.method_defined?(:[])
+        ActionView::OptimizedFileSystemResolver.send(:include, ExtendedFileSystemResolverPatch)
+    end
 end
 
 Query.add_available_column(ExtendedQueryColumn.new(:notes,
