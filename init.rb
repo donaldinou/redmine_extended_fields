@@ -66,8 +66,10 @@ Rails.configuration.to_prepare do
         WikiController.send(:include, CustomFieldsHelper)
     end
 
-    if defined? ActionView::OptimizedFileSystemResolver && !ActionView::OptimizedFileSystemResolver.method_defined?(:[])
-        ActionView::OptimizedFileSystemResolver.send(:include, ExtendedFileSystemResolverPatch)
+    if defined? ActionView::OptimizedFileSystemResolver
+        unless ActionView::OptimizedFileSystemResolver.method_defined?(:[])
+            ActionView::OptimizedFileSystemResolver.send(:include, ExtendedFileSystemResolverPatch)
+        end
     end
 end
 

@@ -1,19 +1,23 @@
 class ExtendedColumn
     include Redmine::I18n
 
-    attr_accessor :name, :caption, :align
+    attr_accessor :name, :align
 
     def initialize(name, options = {})
         self.name = name
-        self.caption = l(options[:caption] || "field_#{name}") # FIXME: gives translation missing: en.field_* - try moving initialization
         self.align = options[:align] if options[:align]
 
+        @caption = options[:caption] || "field_#{name}".to_sym
         @value = options[:value] if options[:value]
         @css_classes = options[:css_classes] if options[:css_classes]
     end
 
     def css_classes
         @css_classes || name
+    end
+
+    def caption
+        l(@caption)
     end
 
     def value(object)

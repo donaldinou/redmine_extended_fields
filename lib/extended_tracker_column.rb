@@ -3,16 +3,20 @@ class ExtendedTrackerColumn < ExtendedColumn
     def initialize(tracker, options = {})
         if options[:open]
             self.name = "open_tracker_#{tracker.id}_issues".to_sym
-            self.caption = l(:label_open_tracker_column, :tracker => tracker.name)
+            @caption = :label_open_tracker_column
         else
             self.name = "tracker_#{tracker.id}_issues".to_sym
-            self.caption = l(:label_tracker_column, :tracker => tracker.name)
+            @caption = :label_tracker_column
         end
         self.align = :center
 
         @options = options
         @css_classes = 'tracker'
         @tracker = tracker
+    end
+
+    def caption
+        l(@caption, :tracker => @tracker.name)
     end
 
     def value(project)

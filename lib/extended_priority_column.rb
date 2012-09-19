@@ -5,15 +5,19 @@ class ExtendedPriorityColumn < ExtendedColumn
 
         if @open
             self.name = "open_priority_#{priority.position}_issues".to_sym
-            self.caption = l(:label_open_priority_column, :priority => priority.name)
+            @caption = :label_open_priority_column
         else
             self.name = "priority_#{priority.position}_issues".to_sym
-            self.caption = l(:label_priority_column, :priority => priority.name)
+            @caption = :label_priority_column
         end
         self.align = :center
 
         @css_classes = "priority-#{priority.position}"
         @priority = priority
+    end
+
+    def caption
+        l(@caption, :priority => @priority.name)
     end
 
     def value(project)

@@ -2,10 +2,14 @@ class ExtendedModuleColumn < ExtendedColumn
 
     def initialize(project_module)
         self.name = "project_module_#{project_module}".to_sym
-        self.caption = l(:label_project_module, :module => l_or_humanize(project_module, :prefix => 'project_module_'))
         self.align = :center
 
+        @caption = :label_project_module
         @module = project_module
+    end
+
+    def caption
+        l(:label_project_module, :module => l_or_humanize(@module, :prefix => 'project_module_'))
     end
 
     def value(project)

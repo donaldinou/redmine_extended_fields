@@ -2,11 +2,15 @@ class ExtendedIssueStatusColumn < ExtendedColumn
 
     def initialize(status)
         self.name = "status_#{status.position}_issues".to_sym
-        self.caption = l(:label_issue_status_column, :status => status.name)
         self.align = :center
 
+        @caption = :label_issue_status_column
         @css_classes = "status-#{status.position}"
         @status = status
+    end
+
+    def caption
+        l(@caption, :status => @status.name)
     end
 
     def value(project)

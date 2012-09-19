@@ -7,7 +7,11 @@ module ExtendedFileSystemResolverPatch
     module InstanceMethods
 
         def [](template)
-            # TODO
+            if File.exist?(File.join(@path, "#{template}.erb"))
+                true
+            else
+                false
+            end
         end
 
     end

@@ -2,10 +2,14 @@ class ExtendedCustomFieldColumn < ExtendedColumn
 
     def initialize(custom_field)
         self.name = "cf_#{custom_field.id}".to_sym
-        self.caption = custom_field.name
 
+        @caption = custom_field.name
         @custom_field = custom_field
         @css_classes = "#{self.name} #{custom_field.field_format}"
+    end
+
+    def caption
+        @caption
     end
 
     def value(object)
