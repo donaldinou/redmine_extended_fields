@@ -58,7 +58,7 @@ module ExtendedFieldsHelperPatch
             end
 
             unless custom_field.hint.blank?
-                tag << '<br />'
+                tag << tag(:br)
                 tag << content_tag(:em, h(custom_field.hint))
             end
 
@@ -84,7 +84,7 @@ module ExtendedFieldsHelperPatch
             end
 
             unless custom_field.hint.blank?
-                tag << '<br />'
+                tag << tag(:br)
                 tag << content_tag(:em, h(custom_field.hint))
             end
 
