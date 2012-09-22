@@ -26,19 +26,19 @@ function toggle_extended_field_format() {
         case 'text':
         case 'wiki':
             if (p_default.tagName.toLowerCase() != 'textarea') {
-                p_default.replaceWith(jQuery('<textarea />', { id:   'custom_field_default_value',
-                                                               name: 'custom_field[default_value]',
-                                                               cols: 40,
-                                                               rows: 15 }).text(default_value));
+                $(p_default).replaceWith(jQuery('<textarea />', { id:   'custom_field_default_value',
+                                                                  name: 'custom_field[default_value]',
+                                                                  cols: 40,
+                                                                  rows: 15 }).text(default_value));
             }
             break;
         case 'bool':
             if ((p_default.tagName.toLowerCase() != 'input') && (p_default.type.toLowerCase() != 'checkbox')) {
-                p_default.replaceWith(jQuery('<input />', { type:    'checkbox',
-                                                            id:      'custom_field_default_value',
-                                                            name:    'custom_field[default_value]',
-                                                            value:   1,
-                                                            checked: default_value }));
+                $(p_default).replaceWith(jQuery('<input />', { type:    'checkbox',
+                                                               id:      'custom_field_default_value',
+                                                               name:    'custom_field[default_value]',
+                                                               value:   1,
+                                                               checked: default_value }));
             }
             break;
         case 'project':
@@ -58,18 +58,18 @@ function toggle_extended_field_format() {
                 }
                 select.prepend(option);
             }
-            p_default.replaceWith(select);
+            $(p_default).replaceWith(select);
             break;
         case 'user':
         case 'version':
             break;
         default:
             if ((p_default.tagName.toLowerCase() != 'input') && (p_default.type.toLowerCase() != 'text')) {
-                p_default.replaceWith(jQuery('<input />', { type:  'text',
-                                                            id:    'custom_field_default_value',
-                                                            name:  'custom_field[default_value]',
-                                                            value: default_value,
-                                                            size:  30 }));
+                $(p_default).replaceWith(jQuery('<input />', { type:  'text',
+                                                               id:    'custom_field_default_value',
+                                                               name:  'custom_field[default_value]',
+                                                               value: default_value,
+                                                               size:  30 }));
             }
             break;
     }

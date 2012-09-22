@@ -30,7 +30,8 @@
     <script type="text/javascript">
     //<![CDATA[
       $(window).ready(function() {
-        $(window).bind('load', toggle_extended_field_format)
+        $('#custom_field_field_format').bind('change', toggle_extended_field_format);
+        $(window).bind('load', toggle_extended_field_format);
       });
     //]]>
     </script>
