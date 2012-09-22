@@ -4,14 +4,24 @@ require_dependency 'extended_fields_hook'
 
 Rails.logger.info 'Starting Extended Fields plugin for Redmine'
 
-Rails.configuration.to_prepare do
-    require_dependency 'query'
+Redmine::CustomFieldFormat.map do |fields|
+    fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => 2.1)
+    fields.register    LinkCustomFieldFormat.new('link',    :label => :label_link,      :order => 2.2)
+    fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => 8)
+end
 
-    Redmine::CustomFieldFormat.map do |fields|
-        fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => 2.1)
-        fields.register    LinkCustomFieldFormat.new('link',    :label => :label_link,      :order => 2.2)
-        fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => 8)
-    end
+Query.add_available_column(ExtendedQueryColumn.new(:notes,
+                                                   :value => lambda { |issue| issue.journals.select{ |journal| journal.notes.present? }.size }))
+
+Query.add_available_column(ExtendedQueryColumn.new(:changes,
+                                                   :caption => :label_change_plural,
+                                                   :value => lambda { |issue| issue.journals.select{ |journal| journal.details.any? }.size }))
+
+Query.add_available_column(ExtendedQueryColumn.new(:watchers,
+                                                   :caption => :label_issue_watchers,
+                                                   :value => lambda { |issue| issue.watchers.size }))
+
+Rails.configuration.to_prepare do
 
     unless ActionView::Base.included_modules.include?(ExtendedFieldsHelper)
         ActionView::Base.send(:include, ExtendedFieldsHelper)
@@ -72,17 +82,6 @@ Rails.configuration.to_prepare do
         end
     end
 end
-
-Query.add_available_column(ExtendedQueryColumn.new(:notes,
-                                                   :value => lambda { |issue| issue.journals.select{ |journal| journal.notes.present? }.size }))
-
-Query.add_available_column(ExtendedQueryColumn.new(:changes,
-                                                   :caption => :label_change_plural,
-                                                   :value => lambda { |issue| issue.journals.select{ |journal| journal.details.any? }.size }))
-
-Query.add_available_column(ExtendedQueryColumn.new(:watchers,
-                                                   :caption => :label_issue_watchers,
-                                                   :value => lambda { |issue| issue.watchers.size }))
 
 Redmine::Plugin.register :extended_fields do
     name 'Extended fields'
