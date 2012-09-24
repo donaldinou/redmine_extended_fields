@@ -1,6 +1,9 @@
 <p><%= form.text_field(:hint, :size => 50) %></p>
 
+<%= javascript_tag('toggle_extended_field_format();') unless defined? observe_field %>
+
 <% content_for :header_tags do %>
+
   <% projects = Project.all_public.active(:order => 'name').collect{ |project| [ project.id, project.name ] } %>
 
   <script type="text/javascript">
@@ -26,15 +29,6 @@
   <!-- Rails 3 + jQuery -->
   <% else %>
     <%= javascript_include_tag('extended_jquery', :plugin => 'extended_fields') %>
-
-    <script type="text/javascript">
-    //<![CDATA[
-      $(window).ready(function() {
-        $('#custom_field_field_format').bind('change', toggle_extended_field_format);
-        $(window).bind('load', toggle_extended_field_format);
-      });
-    //]]>
-    </script>
   <% end %>
 
 <% end %>

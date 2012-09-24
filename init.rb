@@ -81,6 +81,12 @@ Rails.configuration.to_prepare do
             ActionView::OptimizedFileSystemResolver.send(:include, ExtendedFileSystemResolverPatch)
         end
     end
+
+    if CustomField.method_defined?(:format_in?)
+        unless CustomField.included_modules.include?(ExtendedFormatInPatch)
+            CustomField.send(:include, ExtendedFormatInPatch)
+        end
+    end
 end
 
 Redmine::Plugin.register :extended_fields do
