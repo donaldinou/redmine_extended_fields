@@ -1,10 +1,10 @@
+<% projects = Project.all_public.active(:order => 'name').collect{ |project| [ project.id, project.name ] } %>
+
 <% unless defined? observe_field %>
 
   <% if custom_field.field_format == 'project' %>
 
-    <% projects = Project.all_public.active(:order => 'name') %>
-
-    <% blank_option = '' %>
+    <% blank_option = ''.html_safe %>
     <% if custom_field.is_required? %>
       <% unless custom_field.default_value.present? %>
         <% blank_option = content_tag(:option, "--- #{l(:actionview_instancetag_blank_option)} ---") %>
@@ -14,7 +14,7 @@
     <% end %>
 
     <p>
-      <%= form.select(:default_value, blank_option + project_tree_options_for_select(projects, :selected => Project.find_by_id(custom_field.default_value))) %>
+      <%= form.select(:default_value, blank_option + options_for_select(projects, custom_field.default_value)) %>
     </p>
 
   <% end %>
@@ -26,8 +26,6 @@
 <%= javascript_tag('toggle_extended_field_format();') unless defined? observe_field %>
 
 <% content_for :header_tags do %>
-
-  <% projects = Project.all_public.active(:order => 'name').collect{ |project| [ project.id, project.name ] } %>
 
   <script type="text/javascript">
   //<![CDATA[

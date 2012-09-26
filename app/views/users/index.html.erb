@@ -28,9 +28,14 @@
   <%= hidden_field_tag('save', '') %>
 
   <p class="buttons hide-when-print">
-    <%= link_to_function(l(:button_apply), 'var user_list_form = $("user_list_form"); user_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-checked') %>
+    <% if defined? observe_field %>
+      <% user_list_form = "$('user_list_form')" %>
+    <% else %>
+      <% user_list_form = "$('#user_list_form')[0]" %>
+    <% end %>
+    <%= link_to_function(l(:button_apply), "var user_list_form = #{user_list_form}; user_list_form.onsubmit(); user_list_form.submit();", :class => 'icon icon-checked') %>
     <%= link_to(l(:button_clear), { :action => 'index' }, :class => 'icon icon-reload') %>
-    <%= link_to_function(l(:button_save), 'var user_list_form = $("user_list_form"); user_list_form["save"].value = "1"; user_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-save') %>
+    <%= link_to_function(l(:button_save), "var user_list_form = #{user_list_form}; user_list_form['save'].value = '1'; user_list_form.onsubmit(); user_list_form.submit();", :class => 'icon icon-save') %>
   </p>
 
 <% end %>
