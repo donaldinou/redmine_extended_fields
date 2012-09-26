@@ -4,11 +4,11 @@
 <table class="list issues">
     <thead><tr>
         <% if defined? observe_field %>
-          <% upper_form = "Element.up(this, 'form')" %>
+          <% this_form = "Element.up(this, 'form')" %>
         <% else %>
-          <% upper_form = "this.closest('form')" %>
+          <% this_form = "this" %>
         <% end %>
-        <th class="checkbox hide-when-print"><%= link_to image_tag('toggle_check.png'), {}, :onclick => "toggleIssuesSelection(#{upper_form}); return false;",
+        <th class="checkbox hide-when-print"><%= link_to image_tag('toggle_check.png'), {}, :onclick => "toggleIssuesSelection(#{this_form}); return false;",
                                                            :title => "#{l(:button_check_all)}/#{l(:button_uncheck_all)}" %>
         </th>
     <%= sort_header_tag('id', :caption => '#', :default_order => 'desc') %>

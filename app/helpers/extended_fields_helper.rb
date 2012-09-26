@@ -42,7 +42,8 @@ module ExtendedFieldsHelper
         when User
             case column.name
             when :login
-                return (avatar(object, :size => 14) || '') + link_to(h(value), :action => 'edit', :id => object)
+                blank = ''.respond_to?(:html_safe) ? ''.html_safe : ''
+                return (avatar(object, :size => 14) || blank) + link_to(h(value), :action => 'edit', :id => object)
             when :mail
                 return mail_to(h(value))
             when :status
