@@ -5,9 +5,15 @@ require_dependency 'extended_fields_hook'
 Rails.logger.info 'Starting Extended Fields plugin for Redmine'
 
 Redmine::CustomFieldFormat.map do |fields|
-    fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => 2.1)
-    fields.register    LinkCustomFieldFormat.new('link',    :label => :label_link,      :order => 2.2)
-    fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => 8)
+    if Redmine::VERSION::MAJOR < 2
+        base_order = 2
+    else
+        base_order = 1
+    end
+
+    fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => base_order + 0.1)
+    fields.register    LinkCustomFieldFormat.new('link',    :label => :label_link,      :order => base_order + 0.2)
+    fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => base_order + 6)
 end
 
 Query.add_available_column(ExtendedQueryColumn.new(:notes,

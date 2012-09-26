@@ -13,7 +13,9 @@
       <% blank_option = content_tag(:option) %>
     <% end %>
 
-    <%= form.select(:default_value, blank_option + project_tree_options_for_select(projects, :selected => Project.find_by_id(custom_field.default_value))) %>
+    <p>
+      <%= form.select(:default_value, blank_option + project_tree_options_for_select(projects, :selected => Project.find_by_id(custom_field.default_value))) %>
+    </p>
 
   <% end %>
 
