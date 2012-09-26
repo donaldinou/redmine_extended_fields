@@ -1,3 +1,24 @@
+<% unless defined? observe_field %>
+
+  <% if custom_field.field_format == 'project' %>
+
+    <% projects = Project.all_public.active(:order => 'name') %>
+
+    <% blank_option = '' %>
+    <% if custom_field.is_required? %>
+      <% unless custom_field.default_value.present? %>
+        <% blank_option = content_tag(:option, "--- #{l(:actionview_instancetag_blank_option)} ---") %>
+      <% end %>
+    <% else %>
+      <% blank_option = content_tag(:option) %>
+    <% end %>
+
+    <%= f.select(:default_value, blank_option + project_tree_options_for_select(projects, :selected => custom_field.default_value)) %>
+
+  <% end %>
+
+<% end %>
+
 <p><%= form.text_field(:hint, :size => 50) %></p>
 
 <%= javascript_tag('toggle_extended_field_format();') unless defined? observe_field %>

@@ -50,7 +50,7 @@ module ExtendedFieldsHelperPatch
                 blank = custom_field.is_required? ?
                        (custom_field.default_value.blank? ? content_tag(:option, "--- #{l(:actionview_instancetag_blank_option)} ---") : '') :
                         content_tag(:option)
-                tag = select_tag(field_name,
+                tag = select_tag(field_name, // FIXME: project_tree_options_for_select
                                  blank + options_for_select(custom_field.possible_values_options(custom_value.customized), custom_value.value),
                                  :id => field_id, :class => field_class)
             else
