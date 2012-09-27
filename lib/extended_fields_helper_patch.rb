@@ -48,7 +48,7 @@ module ExtendedFieldsHelperPatch
                 tag = text_field_tag(field_name, custom_value.value, :id => field_id, :class => field_class)
             when 'project'
                 blank = custom_field.is_required? ?
-                      ((custom_field.default_value.blank? && custom_value.value.blank?) ? content_tag(:option, "--- #{l(:actionview_instancetag_blank_option)} ---") : (''.respond_to?(:html_safe) ? ''.html_safe : '')) :
+                      ((custom_field.default_value.blank? && custom_value.value.blank?) ? content_tag(:option, "--- #{l(:actionview_instancetag_blank_option)} ---") : ''.html_safe) :
                         content_tag(:option)
                 tag = select_tag(field_name,
                                  blank + options_for_select(custom_field.possible_values_options(custom_value.customized), custom_value.value),

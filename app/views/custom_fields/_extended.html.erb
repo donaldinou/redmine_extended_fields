@@ -1,4 +1,4 @@
-<% projects = Project.all_public.active(:order => 'name').collect{ |project| [ project.id, project.name ] } %>
+<% projects = Project.all_public.active(:order => 'name').collect{ |project| [ project.name, project.id ] } %>
 
 <% unless defined? observe_field %>
 
@@ -29,7 +29,7 @@
 
   <script type="text/javascript">
   //<![CDATA[
-    var projects = <%= String.method_defined?(:html_safe) ? projects.to_json.html_safe : projects.to_json %>;
+    var projects = <%= projects.to_json.html_safe %>;
     var actionview_instancetag_blank_option = '<%= "--- #{l(:actionview_instancetag_blank_option)} ---" %>';
   //]]>
   </script>

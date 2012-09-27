@@ -52,8 +52,8 @@ function toggle_extended_field_format() {
                 select.insert(new Element('option'));
             }
             for (var i = 0; i < projects.length; i++) {
-                var option = new Element('option', { value: projects[i][0] }).update(projects[i][1])
-                if (projects[i][0] == default_value) {
+                var option = new Element('option', { value: projects[i][1] }).update(projects[i][0])
+                if (projects[i][1] == default_value) {
                     option.selected = true;
                 }
                 select.insert(option);

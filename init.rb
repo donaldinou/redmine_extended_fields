@@ -29,6 +29,10 @@ Query.add_available_column(ExtendedQueryColumn.new(:watchers,
 
 Rails.configuration.to_prepare do
 
+    if String.method_defined?(:html_safe)
+        String.send(:include, ExtendedStringHTMLSafePatch)
+    end
+
     unless ActionView::Base.included_modules.include?(ExtendedFieldsHelper)
         ActionView::Base.send(:include, ExtendedFieldsHelper)
     end

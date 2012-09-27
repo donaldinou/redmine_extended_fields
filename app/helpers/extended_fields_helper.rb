@@ -42,11 +42,7 @@ module ExtendedFieldsHelper
         when User
             case column.name
             when :login
-                if String.method_defined?(:html_safe)
-                    return avatar(object, :size => 14).html_safe + link_to(h(value), :action => 'edit', :id => object)
-                else
-                    return (avatar(object, :size => 14) || '') + link_to(h(value), :action => 'edit', :id => object)
-                end
+                return (avatar(object, :size => 14).html_safe || ''.html_safe) + link_to(h(value), :action => 'edit', :id => object)
             when :mail
                 return mail_to(h(value))
             when :status
