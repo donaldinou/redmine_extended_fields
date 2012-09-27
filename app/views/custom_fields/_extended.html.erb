@@ -24,7 +24,7 @@
 <p><%= form.text_field(:hint, :size => 50) %></p>
 
 <% unless defined? observe_field %>
-  <%= javascript_tag('$("#custom_field_multiple").parent().hide()') %>
+  <%= javascript_tag('$("#custom_field_multiple").parent().hide()') if custom_field.field_format == 'project' %>
 <% else %>
   <%= javascript_tag('toggle_extended_field_format();') %>
 <% end %>
