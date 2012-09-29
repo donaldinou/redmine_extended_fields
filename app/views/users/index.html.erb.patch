@@ -1,6 +1,6 @@
---- /usr/share/redmine/app/views/users/index.html.erb	2011-12-10 16:53:33.000000000 +0200
-+++ index.rhtml	2012-03-10 22:01:33.000000000 +0200
-@@ -1,52 +1,63 @@
+--- /usr/share/redmine/app/views/users/index.html.erb	2012-09-16 15:54:12.000000000 +0300
++++ index.html.erb	2012-09-22 23:03:26.260691074 +0300
+@@ -1,52 +1,69 @@
  <div class="contextual">
 -<%= link_to l(:label_user_new), new_user_path, :class => 'icon icon-add' %>
 +<%= link_to l(:label_user_new), { :action => 'new' }, :class => 'icon icon-add' %>
@@ -8,8 +8,8 @@
  
  <h2><%=l(:label_user_plural)%></h2>
  
--<% form_tag({}, :method => :get) do %>
-+<% form_tag({}, :onsubmit => 'selectAllOptions("selected_columns");', :method => :get, :id => 'user_list_form') do %>
+-<%= form_tag({}, :method => :get) do %>
++<% form = form_tag({}, :onsubmit => 'selectAllOptions("selected_columns");', :method => :get, :id => 'user_list_form') do %>
  <fieldset><legend><%= l(:label_filter_plural) %></legend>
  <label for='status'><%= l(:field_status) %>:</label>
 -<%= select_tag 'status', users_status_options_for_select(@status), :class => "small", :onchange => "this.form.submit(); return false;"  %>
@@ -17,8 +17,8 @@
  
  <% if @groups.present? %>
  <label for='group_id'><%= l(:label_group) %>:</label>
--<%= select_tag 'group_id', '<option></option>' + options_from_collection_for_select(@groups, :id, :name, params[:group_id].to_i), :onchange => "this.form.submit(); return false;"  %>
-+<%= select_tag 'group_id', '<option></option>' + options_from_collection_for_select(@groups, :id, :name, params[:group_id].to_i), :onchange => "this.form.onsubmit(); this.form.submit(); return false;" %>
+-<%= select_tag 'group_id', content_tag('option') + options_from_collection_for_select(@groups, :id, :name, params[:group_id].to_i), :onchange => "this.form.submit(); return false;"  %>
++<%= select_tag 'group_id', content_tag('option') + options_from_collection_for_select(@groups, :id, :name, params[:group_id].to_i), :onchange => "this.form.onsubmit(); this.form.submit(); return false;" %>
  <% end %>
  
  <label for='name'><%= l(:label_user) %>:</label>
@@ -37,13 +37,19 @@
 +  <%= hidden_field_tag('save', '') %>
 +
 +  <p class="buttons hide-when-print">
-+    <%= link_to_function(l(:button_apply), 'var user_list_form = $("user_list_form"); user_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-checked') %>
++    <% if defined? observe_field %>
++      <% user_list_form = "$('user_list_form')" %>
++    <% else %>
++      <% user_list_form = "$('#user_list_form')[0]" %>
++    <% end %>
++    <%= link_to_function(l(:button_apply), "var user_list_form = #{user_list_form}; user_list_form.onsubmit(); user_list_form.submit();", :class => 'icon icon-checked') %>
 +    <%= link_to(l(:button_clear), { :action => 'index' }, :class => 'icon icon-reload') %>
-+    <%= link_to_function(l(:button_save), 'var user_list_form = $("user_list_form"); user_list_form["save"].value = "1"; user_list_form.onsubmit(); user_list_form.submit();', :class => 'icon icon-save') %>
++    <%= link_to_function(l(:button_save), "var user_list_form = #{user_list_form}; user_list_form['save'].value = '1'; user_list_form.onsubmit(); user_list_form.submit();", :class => 'icon icon-save') %>
 +  </p>
 +
  <% end %>
 -&nbsp;
++<%= form if Rails::VERSION::MAJOR >= 3 %>
  
  <div class="autoscroll">
 -<table class="list">
@@ -80,7 +86,7 @@
 +    <% end %>
      <td class="buttons">
        <%= change_status_link(user) %>
--      <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
+-      <%= delete_link user_path(user, :back_url => users_path(params)) unless User.current == user %>
 +      <% if UsersController.respond_to?(:destroy) %>
 +        <%= link_to(l(:button_delete), user, :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
 +      <% end %>

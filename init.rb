@@ -29,7 +29,7 @@ Query.add_available_column(ExtendedQueryColumn.new(:watchers,
 
 Rails.configuration.to_prepare do
 
-    if String.method_defined?(:html_safe)
+    unless String.method_defined?(:html_safe)
         String.send(:include, ExtendedStringHTMLSafePatch)
     end
 
