@@ -14,7 +14,7 @@ module ExtendedCustomValuePatch
     module InstanceMethods
 
         def editable_with_extended?
-            if !customized || customized.new_record?
+            if !customized || customized.new_record? # FIXME: Seems does not work for 1.4.x...
                 custom_field.is_for_new? && editable_without_extended?
             else
                 editable_without_extended?
