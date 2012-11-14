@@ -5,14 +5,16 @@ module ExtendedFieldsHelper
         filename.gsub!(%r{(^_+|_+$)}, '')
 
         unless filename.empty?
+            format_extension = request ? ".#{request.template_format}" : ''
+
             self.view_paths.each do |load_path|
-                if template = load_path["custom_values/#{custom_field.field_format}/_#{filename}.#{request.template_format}"]
+                if template = load_path["custom_values/#{custom_field.field_format}/_#{filename}#{format_extension}"]
                     return "custom_values/#{custom_field.field_format}/#{filename}"
                 end
             end
 
             self.view_paths.each do |load_path|
-                if template = load_path["custom_values/common/_#{custom_field.field_format}.#{request.template_format}"]
+                if template = load_path["custom_values/common/_#{custom_field.field_format}#{format_extension}"]
                     return "custom_values/common/#{custom_field.field_format}"
                 end
             end
