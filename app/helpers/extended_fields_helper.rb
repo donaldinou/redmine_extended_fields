@@ -5,7 +5,7 @@ module ExtendedFieldsHelper
         filename.gsub!(%r{(^_+|_+$)}, '')
 
         unless filename.empty?
-            format_extension = request ? ".#{request.template_format}" : ''
+            format_extension = (request && request.respond_to?(:template_format)) ? ".#{request.template_format}" : '' # FIXME
 
             self.view_paths.each do |load_path|
                 if template = load_path["custom_values/#{custom_field.field_format}/_#{filename}#{format_extension}"]
