@@ -7,10 +7,16 @@ module ExtendedFileSystemResolverPatch
     module InstanceMethods
 
         def [](template)
-            if File.exist?(File.join(@path, "#{template}.erb"))
-                true
+            @custom_field_templates ||= {}
+
+            if @custom_field_templates.has_key?(template)
+                Rails.logger.info " >>> Using cache" # FIXME
+                @custom_field_templates[template]
+            elsif File.exist?(File.join(@path, "#{template}.erb"))
+                Rails.logger.info " >>> Using File.exist?" # FIXME
+                @custom_field_templates[template] = true
             else
-                false
+                @custom_field_templates[template] = false
             end
         end
 

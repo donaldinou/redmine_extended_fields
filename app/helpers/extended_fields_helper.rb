@@ -1,11 +1,11 @@
 module ExtendedFieldsHelper
 
-    def find_custom_field_template(custom_field) # TODO: cache
+    def find_custom_field_template(custom_field)
         filename = custom_field.name.gsub(%r{[^a-z0-9_]+}i, '_').downcase
         filename.gsub!(%r{(^_+|_+$)}, '')
 
         unless filename.empty?
-            format_extension = (request && request.respond_to?(:template_format)) ? ".#{request.template_format}" : '' # FIXME
+            format_extension = (request && request.respond_to?(:template_format)) ? ".#{request.template_format}" : ''
 
             self.view_paths.each do |load_path|
                 if template = load_path["custom_values/#{custom_field.field_format}/_#{filename}#{format_extension}"]
