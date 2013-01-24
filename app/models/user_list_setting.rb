@@ -37,7 +37,7 @@ class UserListSetting < ActiveRecord::Base
             @extended_columns
         else
             fields = read_attribute(:columns) || []
-            fields = list_class.default_columns.collect{ |column| column.name } if fields.empty?
+            fields = list_class.default_columns.collect{ |column| column.name } if fields.blank?
 
             available_columns = list_class.available_columns.inject({}) do |hash, column|
                 hash[column.name] = column
