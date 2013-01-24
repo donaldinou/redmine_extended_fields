@@ -97,6 +97,12 @@ Rails.configuration.to_prepare do
             CustomField.send(:include, ExtendedFormatInPatch)
         end
     end
+
+    if defined? XlsExportController
+        unless XlsExportController.included_modules.include?(ExtendedFieldsHelper)
+            XlsExportController.send(:include, ExtendedFieldsHelper)
+        end
+    end
 end
 
 Redmine::Plugin.register :extended_fields do
