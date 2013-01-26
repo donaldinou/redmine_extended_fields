@@ -1,12 +1,13 @@
-require_dependency 'custom_value'
+require_dependency 'custom_field_value'
 
-module ExtendedCustomValuePatch
+module ExtendedCustomFieldValuePatch
 
     def self.included(base)
         base.send(:include, InstanceMethods)
         base.class_eval do
             unloadable
 
+            Rails.logger.info " >>> ExtendedCustomFieldValuePatch"
             alias_method_chain :editable?, :extended
         end
     end
