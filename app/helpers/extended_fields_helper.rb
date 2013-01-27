@@ -5,7 +5,40 @@ module ExtendedFieldsHelper
         filename.gsub!(%r{(^_+|_+$)}, '')
 
         unless filename.empty?
-            format_extension = (request && request.respond_to?(:template_format)) ? ".#{request.template_format}" : ''
+            # FIXME
+            Rails.logger.info " !!! FIND_CUSTOM_FIELD_TEMPLATE(#{custom_field.field_format}/#{filename}) [#{self.class.name}]"
+            format_extension = ''
+            if request
+                Rails.logger.info " !!! REQUEST"
+                if request.respond_to?(:template_format)
+                    Rails.logger.info " !!! TEMPLATE_FORMAT => #{request.template_format}"
+                    format_extension = ".#{request.template_format}"
+                end
+                if request.respond_to?(:parameters)
+                    Rails.logger.info " >>> PARAMETERS => #{request.parameters.inspect}"
+                end
+                if request.respond_to?(:params)
+                    Rails.logger.info " >>> PARAMS => #{request.params.inspect}"
+                end
+                if request.respond_to?(:formats)
+                    Rails.logger.info " >>> REQUEST.FORMATS => #{request.formats.inspect}"
+                end
+            elsif controller
+                Rails.logger.info " !!! CONTROLLER"
+                if controller.respond_to?(:template)
+                    Rails.logger.info " !!! CONTROLLER.TEMPLATE.TEMPLATE_FORMAT => #{controller.template.template_format}"
+                    format_extension = ".#{controller.template.template_format}"
+                end
+            end
+            if respond_to?(:formats)
+                Rails.logger.info " >>> FORMATS => #{formats.inspect}"
+            end
+            if respond_to?(:parse_content_type)
+                Rails.logger.info " >>> PARSE_CONTENT_TYPE => #{parse_content_type.inspect}"
+            end
+            if respond_to?(:content_type)
+                Rails.logger.info " >>> CONTENT_TYPE => #{content_type.inspect}"
+            end
 
             self.view_paths.each do |load_path|
                 if template = load_path["custom_values/#{custom_field.field_format}/_#{filename}#{format_extension}"]
