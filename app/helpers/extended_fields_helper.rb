@@ -23,6 +23,10 @@ module ExtendedFieldsHelper
                 if request.respond_to?(:formats)
                     Rails.logger.info " >>> REQUEST.FORMATS => #{request.formats.inspect}"
                 end
+                if respond_to?(:formats) # FIXME: remove
+                    Rails.logger.info " !!! FORMATS => #{formats.inspect}"
+                    format_extension = ".#{formats.first}"
+                end
             elsif controller # FIXME &&
                 Rails.logger.info " !!! CONTROLLER"
                 if controller.respond_to?(:template)
