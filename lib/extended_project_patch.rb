@@ -4,6 +4,9 @@ module ExtendedProjectPatch
 
     def self.included(base)
         base.extend(ClassMethods)
+        unless base.method_defined?(:archived?)
+            base.send(:include, ArchivedMethods)
+        end
     end
 
     module ClassMethods
@@ -131,4 +134,11 @@ module ExtendedProjectPatch
 
     end
 
+    module ArchivedMethods
+
+        def archived?
+            self.status == self.class::STATUS_ARCHIVED
+        end
+
+    end
 end
