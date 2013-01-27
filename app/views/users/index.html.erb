@@ -61,7 +61,7 @@
     <% end %>
     <td class="buttons">
       <%= change_status_link(user) %>
-      <% if UsersController.method_defined?(:destroy) %><!-- FIXME -->
+      <% if UsersController.method_defined?(:destroy) %>
         <%= link_to(l(:button_delete), user_path(user, :back_url => users_path(params)), :confirm => l(:text_are_you_sure), :method => :delete, :class => 'icon icon-del') unless User.current == user %>
       <% end %>
     </td>
