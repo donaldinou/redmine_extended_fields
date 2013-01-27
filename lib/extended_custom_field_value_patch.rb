@@ -7,7 +7,6 @@ module ExtendedCustomFieldValuePatch
         base.class_eval do
             unloadable
 
-            Rails.logger.info " >>> ExtendedCustomFieldValuePatch"
             alias_method_chain :editable?, :extended
         end
     end
