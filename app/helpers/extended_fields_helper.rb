@@ -5,43 +5,22 @@ module ExtendedFieldsHelper
         filename.gsub!(%r{(^_+|_+$)}, '')
 
         unless filename.empty?
-            # FIXME
-            Rails.logger.info " !!! FIND_CUSTOM_FIELD_TEMPLATE(#{custom_field.field_format}/#{filename}) [#{self.class.name}]"
             format_extension = ''
+            # Redmine 2.x.x
             if respond_to?(:formats)
-                Rails.logger.info " !!! FORMATS => #{formats.inspect}"
                 format_extension = ".#{formats.first}"
-            elsif request
-                Rails.logger.info " !!! REQUEST"
-                if request.respond_to?(:template_format)
-                    Rails.logger.info " !!! TEMPLATE_FORMAT => #{request.template_format}"
-                    format_extension = ".#{request.template_format}"
-                end
-                if request.respond_to?(:parameters)
-                    Rails.logger.info " >>> PARAMETERS => #{request.parameters.inspect}"
-                end
-                if request.respond_to?(:params)
-                    Rails.logger.info " >>> PARAMS => #{request.params.inspect}"
-                end
-                if request.respond_to?(:formats)
-                    Rails.logger.info " >>> REQUEST.FORMATS => #{request.formats.inspect}"
-                end
+            # Redmine 1.x.x
+            elsif request && request.respond_to?(:template_format)
+                format_extension = ".#{request.template_format}"
+            # Mailer
             elsif controller
-                Rails.logger.info " !!! CONTROLLER"
+                # Redmine 1.x.x
                 if controller.respond_to?(:template)
-                    Rails.logger.info " !!! CONTROLLER.TEMPLATE.TEMPLATE_FORMAT => #{controller.template.template_format}"
                     format_extension = ".#{controller.template.template_format}"
-                end
-                if controller.respond_to?(:lookup_context)
-                    Rails.logger.info " !!! LOOKUP_CONTEXT.FORMATS => #{controller.lookup_context.formats.inspect}"
+                # Redmine 2.x.x
+                elsif controller.respond_to?(:lookup_context)
                     format_extension = ".#{controller.lookup_context.formats.first}"
                 end
-            end
-            if respond_to?(:parse_content_type)
-                Rails.logger.info " >>> PARSE_CONTENT_TYPE => #{parse_content_type.inspect}"
-            end
-            if respond_to?(:content_type)
-                Rails.logger.info " >>> CONTENT_TYPE => #{content_type.inspect}"
             end
 
             self.view_paths.each do |load_path|

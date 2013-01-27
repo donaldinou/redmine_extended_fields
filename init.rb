@@ -61,12 +61,12 @@ Rails.configuration.to_prepare do
     unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
         CustomField.send(:include, ExtendedCustomFieldPatch)
     end
-    #begin
+    begin
         unless CustomFieldValue.included_modules.include?(ExtendedCustomFieldValuePatch)
             CustomFieldValue.send(:include, ExtendedCustomFieldValuePatch)
         end
-    #rescue FIXME: Redmine 1.0
-    #end
+    rescue NameError
+    end
     unless CustomValue.included_modules.include?(ExtendedCustomValuePatch)
         CustomValue.send(:include, ExtendedCustomValuePatch)
     end
