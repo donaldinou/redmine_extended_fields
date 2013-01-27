@@ -8,7 +8,10 @@ module ExtendedFieldsHelper
             # FIXME
             Rails.logger.info " !!! FIND_CUSTOM_FIELD_TEMPLATE(#{custom_field.field_format}/#{filename}) [#{self.class.name}]"
             format_extension = ''
-            if request # FIXME &&
+            if respond_to?(:formats)
+                Rails.logger.info " !!! FORMATS => #{formats.inspect}"
+                format_extension = ".#{formats.first}"
+            elsif request
                 Rails.logger.info " !!! REQUEST"
                 if request.respond_to?(:template_format)
                     Rails.logger.info " !!! TEMPLATE_FORMAT => #{request.template_format}"
@@ -23,19 +26,16 @@ module ExtendedFieldsHelper
                 if request.respond_to?(:formats)
                     Rails.logger.info " >>> REQUEST.FORMATS => #{request.formats.inspect}"
                 end
-                if respond_to?(:formats) # FIXME: remove
-                    Rails.logger.info " !!! FORMATS => #{formats.inspect}"
-                    format_extension = ".#{formats.first}"
-                end
-            elsif controller # FIXME &&
+            elsif controller
                 Rails.logger.info " !!! CONTROLLER"
                 if controller.respond_to?(:template)
                     Rails.logger.info " !!! CONTROLLER.TEMPLATE.TEMPLATE_FORMAT => #{controller.template.template_format}"
                     format_extension = ".#{controller.template.template_format}"
                 end
-            elsif respond_to?(:formats)
-                Rails.logger.info " !!! FORMATS => #{formats.inspect}"
-                format_extension = ".#{formats.first}"
+                if controller.respond_to?(:lookup_context)
+                    Rails.logger.info " !!! LOOKUP_CONTEXT.FORMATS => #{controller.lookup_context.formats.inspect}"
+                    format_extension = ".#{controller.lookup_context.formats.first}"
+                end
             end
             if respond_to?(:parse_content_type)
                 Rails.logger.info " >>> PARSE_CONTENT_TYPE => #{parse_content_type.inspect}"
