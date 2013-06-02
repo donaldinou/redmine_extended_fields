@@ -70,9 +70,6 @@ Rails.configuration.to_prepare do
     unless CustomValue.included_modules.include?(ExtendedCustomValuePatch)
         CustomValue.send(:include, ExtendedCustomValuePatch)
     end
-    unless QueryCustomFieldColumn.included_modules.include?(ExtendedQueryCustomFieldColumn)
-        QueryCustomFieldColumn.send(:include, ExtendedQueryCustomFieldColumn)
-    end
     unless Query.included_modules.include?(ExtendedCustomQueryPatch)
         Query.send(:include, ExtendedCustomQueryPatch)
     end

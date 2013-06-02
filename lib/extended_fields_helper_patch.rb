@@ -30,7 +30,11 @@ module ExtendedFieldsHelperPatch
                                                          :request      => request,
                                                          :custom_field => custom_value }))
                 else
-                    Redmine::CustomFieldFormat.format_value(custom_value.value, custom_value.custom_field.field_format)
+                    if respond_to?(:format_value)
+                        format_value(custom_value.value, custom_value.custom_field.field_format)
+                    else # Redmine < 2.2.x
+                        Redmine::CustomFieldFormat.format_value(custom_value.value, custom_value.custom_field.field_format)
+                    end
                 end
             end
         end
