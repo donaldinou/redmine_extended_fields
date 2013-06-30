@@ -1,4 +1,4 @@
-<% projects = Project.all_public.active(:order => 'name').collect{ |project| [ project.name, project.id ] } %>
+<% projects = Project.all_public.active.sort_by(&:name).collect{ |project| [ project.name, project.id ] } %>
 
 <% unless defined? observe_field %>
 

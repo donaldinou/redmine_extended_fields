@@ -114,5 +114,5 @@ Redmine::Plugin.register :extended_fields do
     author_url 'http://www.andriylesyuk.com'
     description 'Adds new custom field types, improves listings etc.'
     url 'http://projects.andriylesyuk.com/projects/extended-fields'
-    version '0.2.1'
+    version '0.2.2'
 end
