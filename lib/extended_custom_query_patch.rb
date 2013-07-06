@@ -3,7 +3,7 @@ require_dependency 'query'
 module ExtendedCustomQueryPatch
 
     def self.included(base)
-        if Redmine::VERSION::MAJOR < 2 || (Redmine::VERSION::MAJOR == 2 && Redmine::VERSION::MINOR == 0)
+        if Redmine::VERSION::MAJOR < 2 || (Redmine::VERSION::MAJOR == 2 && Redmine::VERSION::MINOR == 0) || defined?(ChiliProject)
             base.send(:include, Redmine1InstanceMethods)
         else
             base.send(:include, Redmine2InstanceMethods)
@@ -51,7 +51,7 @@ module ExtendedCustomQueryPatch
                     options = { :type => :list_optional, :values => field.possible_values_options, :order => 20 }
                 end
 
-                options.merge!({:format => field.field_format}) if options && Redmine::VERSION::MAJOR == 2
+                options.merge!({:format => field.field_format}) if options && Redmine::VERSION::MAJOR == 2 && !defined?(ChiliProject)
 
                 @available_filters["cf_#{field.id}"] = options.merge({ :name => field.name }) if options
             end

@@ -5,7 +5,7 @@ require_dependency 'extended_fields_hook'
 Rails.logger.info 'Starting Extended Fields plugin for Redmine'
 
 Redmine::CustomFieldFormat.map do |fields|
-    if Redmine::VERSION::MAJOR < 2
+    if Redmine::VERSION::MAJOR < 2 || defined?(ChiliProject)
         base_order = 2
     else
         base_order = 1
