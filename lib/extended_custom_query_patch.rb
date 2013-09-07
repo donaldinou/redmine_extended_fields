@@ -8,13 +8,11 @@ module ExtendedCustomQueryPatch
         else
             base.send(:include, Redmine2InstanceMethods)
         end
-        #base.send(:include, CommonInstanceMethods)
 
         base.class_eval do
             unloadable
 
             alias_method_chain :add_custom_fields_filters, :extended
-            #alias_method_chain :versions, :extended
         end
     end
 
@@ -58,15 +56,5 @@ module ExtendedCustomQueryPatch
         end
 
     end
-
-    #module CommonInstanceMethods
-
-        #def versions_with_extended(options = {})
-            #options => {:conditions=>["effective_date BETWEEN ? AND ?", Sun, 30 Dec 2012, Sat, 02 Feb 2013]}
-            #ExtendedDateField.find(options[:conditions][1], options[:conditions][2]) #Date
-        #    versions_without_extended(options)
-        #end
-
-    #end
 
 end

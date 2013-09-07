@@ -52,6 +52,9 @@ Rails.configuration.to_prepare do
     unless IssuesController.included_modules.include?(ExtendedIssuesControllerPatch)
         IssuesController.send(:include, ExtendedIssuesControllerPatch)
     end
+    unless CalendarsController.included_modules.include?(ExtendedCalendarsControllerPatch)
+        CalendarsController.send(:include, ExtendedCalendarsControllerPatch)
+    end
     unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
         CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
     end
