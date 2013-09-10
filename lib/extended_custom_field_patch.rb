@@ -63,8 +63,7 @@ module ExtendedCustomFieldPatch
                 value.blank? ? nil : value
             when 'project'
                 unless value.blank?
-                    Project.find_by_id(value) # FIXME Can be a problem under Redmine 1.0.x
-                    # FIXME project ? project.name : nil
+                    Project.find_by_id(value)
                 else
                     nil
                 end
