@@ -8,3 +8,7 @@ form.new_project input[type="text"],
 form.edit_project input[type="text"] {
     width: 30em;
 }
+form.new_project input[type="text"].date_cf,
+form.edit_project input[type="text"].date_cf {
+    width: auto;
+}
