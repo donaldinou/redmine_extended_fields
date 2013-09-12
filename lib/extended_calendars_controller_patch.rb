@@ -13,7 +13,7 @@ module ExtendedCalendarsControllerPatch
 
     module InstanceMethods
 
-        def extended_show # FIXME make sure it is compatible with other Redmine versions
+        def extended_show
             if params[:year] && params[:year].to_i > 1900
                 @year  = params[:year].to_i
                 @month = params[:month].to_i if params[:month] && params[:month].to_i > 0 && params[:month].to_i < 13
