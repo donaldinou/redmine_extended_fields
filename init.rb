@@ -16,7 +16,7 @@ Redmine::CustomFieldFormat.map do |fields|
     fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => base_order + 6)
 end
 
-issue_query = defined?(IssueQuery) ? IssueQuery : Query
+issue_query = (IssueQuery rescue Query)
 
 issue_query.add_available_column(ExtendedQueryColumn.new(:notes,
                                                          :value => lambda { |issue| issue.journals.select{ |journal| journal.notes.present? }.size }))
