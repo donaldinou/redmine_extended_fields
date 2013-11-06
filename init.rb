@@ -16,16 +16,18 @@ Redmine::CustomFieldFormat.map do |fields|
     fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => base_order + 6)
 end
 
-Query.add_available_column(ExtendedQueryColumn.new(:notes,
-                                                   :value => lambda { |issue| issue.journals.select{ |journal| journal.notes.present? }.size }))
+issue_query = defined?(IssueQuery) ? IssueQuery : Query
 
-Query.add_available_column(ExtendedQueryColumn.new(:changes,
-                                                   :caption => :label_change_plural,
-                                                   :value => lambda { |issue| issue.journals.select{ |journal| journal.details.any? }.size }))
+issue_query.add_available_column(ExtendedQueryColumn.new(:notes,
+                                                         :value => lambda { |issue| issue.journals.select{ |journal| journal.notes.present? }.size }))
 
-Query.add_available_column(ExtendedQueryColumn.new(:watchers,
-                                                   :caption => :label_issue_watchers,
-                                                   :value => lambda { |issue| issue.watchers.size }))
+issue_query.add_available_column(ExtendedQueryColumn.new(:changes,
+                                                         :caption => :label_change_plural,
+                                                         :value => lambda { |issue| issue.journals.select{ |journal| journal.details.any? }.size }))
+
+issue_query.add_available_column(ExtendedQueryColumn.new(:watchers,
+                                                         :caption => :label_issue_watchers,
+                                                         :value => lambda { |issue| issue.watchers.size }))
 
 Rails.configuration.to_prepare do
 
