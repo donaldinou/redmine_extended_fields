@@ -25,7 +25,18 @@
 
 <!-- Rails 3 + jQuery -->
 <% unless defined? observe_field %>
-  <%= javascript_tag('$("#custom_field_multiple").parent().hide()') if custom_field.field_format == 'project' %>
+
+  <% if custom_field.field_format == 'project' %>
+    <script type="text/javascript">
+    //<![CDATA[
+      $('#custom_field_multiple').parent().hide();
+      var default_value = $('#custom_field_default_value')
+      if (default_value.prop('tagName') == 'INPUT') {
+        default_value.parent().hide();
+      }
+    //]]>
+    </script>
+  <% end %>
 
   <% if Redmine::VERSION::MAJOR > 1 && Redmine::VERSION::MINOR > 1 && !defined?(ChiliProject) %>
     <%= javascript_tag('toggle_extended_field_format();') %>
