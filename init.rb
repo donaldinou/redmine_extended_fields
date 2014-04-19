@@ -4,16 +4,18 @@ require_dependency 'extended_fields_hook'
 
 Rails.logger.info 'Starting Extended Fields plugin for Redmine'
 
-Redmine::CustomFieldFormat.map do |fields|
-    if Redmine::VERSION::MAJOR < 2 || defined?(ChiliProject)
-        base_order = 2
-    else
-        base_order = 1
-    end
+if defined?(Redmine::CustomFieldFormat)
+    Redmine::CustomFieldFormat.map do |fields|
+        if Redmine::VERSION::MAJOR < 2 || defined?(ChiliProject)
+            base_order = 2
+        else
+            base_order = 1
+        end
 
-    fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => base_order + 0.1)
-    fields.register    LinkCustomFieldFormat.new('link',    :label => :label_link,      :order => base_order + 0.2)
-    fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => base_order + 6)
+        fields.register    WikiCustomFieldFormat.new('wiki',    :label => :label_wiki_text, :order => base_order + 0.1)
+        fields.register    LinkCustomFieldFormat.new('link',    :label => :label_link,      :order => base_order + 0.2)
+        fields.register ProjectCustomFieldFormat.new('project', :label => :label_project,   :order => base_order + 6)
+    end
 end
 
 issue_query = (IssueQuery rescue Query)
@@ -119,5 +121,5 @@ Redmine::Plugin.register :extended_fields do
     author_url 'http://www.andriylesyuk.com'
     description 'Adds new custom field types, improves listings etc.'
     url 'http://projects.andriylesyuk.com/projects/extended-fields'
-    version '0.2.2'
+    version '0.2.3'
 end
