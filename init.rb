@@ -4,6 +4,10 @@ require_dependency 'extended_fields_hook'
 
 Rails.logger.info 'Starting Extended Fields plugin for Redmine'
 
+unless defined?(Redmine::CustomFieldFormat)
+    require_dependency 'extended_field_format'
+end
+
 if defined?(Redmine::CustomFieldFormat)
     Redmine::CustomFieldFormat.map do |fields|
         if Redmine::VERSION::MAJOR < 2 || defined?(ChiliProject)

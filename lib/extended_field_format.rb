@@ -3,7 +3,7 @@ module Redmine
 
         class ProjectFormat < RecordList
             add 'project'
-            # TODO self.form_partial = 'custom_fields/formats/project'
+            self.form_partial = 'custom_fields/formats/project'
 
             def cast_single_value(custom_field, value, customized = nil)
                 unless value.blank?
