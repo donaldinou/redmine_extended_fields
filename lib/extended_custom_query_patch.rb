@@ -18,7 +18,7 @@ module ExtendedCustomQueryPatch
 
     module Redmine2InstanceMethods
 
-        def add_custom_fields_filters_with_extended(custom_fields, assoc = nil)
+        def add_custom_fields_filters_with_extended(custom_fields, assoc = nil) # FIXME ?
             add_custom_fields_filters_without_extended(custom_fields, assoc)
 
             custom_fields.select(&:is_filter?).each do |field|

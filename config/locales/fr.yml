@@ -1,8 +1,8 @@
 fr:
   label_wiki_text: Texte Wiki
   label_link: Lien
+  label_on_registration: A l'enregistrement
 
-  field_is_for_new: A l'enregistrement
   field_hint: Indication
 
   label_full_name: Nom complet

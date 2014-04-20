@@ -1,8 +1,8 @@
 sv:
   label_wiki_text: Wiki text
   label_link: Link
+  label_on_registration: Vid registrering
 
-  field_is_for_new: Vid registrering
   field_hint: Hint
 
   label_full_name: Hela namnet

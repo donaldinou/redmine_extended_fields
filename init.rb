@@ -59,14 +59,16 @@ Rails.configuration.to_prepare do
     unless CalendarsController.included_modules.include?(ExtendedCalendarsControllerPatch)
         CalendarsController.send(:include, ExtendedCalendarsControllerPatch)
     end
-    unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
-        CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
-    end
     unless QueriesHelper.included_modules.include?(ExtendedQueriesHelperPatch)
         QueriesHelper.send(:include, ExtendedQueriesHelperPatch)
     end
-    unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
-        CustomField.send(:include, ExtendedCustomFieldPatch)
+    unless defined?(Redmine::CustomFieldFormat)
+        unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
+            CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
+        end
+        unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
+            CustomField.send(:include, ExtendedCustomFieldPatch)
+        end
     end
     begin
         unless CustomFieldValue.included_modules.include?(ExtendedCustomFieldValuePatch)

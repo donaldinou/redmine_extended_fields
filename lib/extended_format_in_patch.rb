@@ -18,7 +18,7 @@ module ExtendedFormatInPatch
             when 'wiki'
                 args.include?('text')
             when 'link'
-                args.include?('string')
+                args.include?('link') || args.include?('string')
             when 'project'
                 args.include?('version')
             else

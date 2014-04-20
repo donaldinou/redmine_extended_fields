@@ -15,7 +15,7 @@ module ExtendedCustomValuePatch
 
         def editable_with_extended?
             if !customized || customized.new_record?
-                custom_field.is_for_new? && editable_without_extended?
+                custom_field.significant? && editable_without_extended?
             else
                 editable_without_extended?
             end

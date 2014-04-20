@@ -1,8 +1,8 @@
 uk:
   label_wiki_text: Текст Wiki
   label_link: Посилання
+  label_on_registration: Під час реєстрації
 
-  field_is_for_new: Під час реєстрації
   field_hint: Підказка
 
   label_full_name: Повне ім'я

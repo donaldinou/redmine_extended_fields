@@ -1,8 +1,8 @@
 tr:
   label_wiki_text: Wiki metni
   label_link: Bağlantı
+  label_on_registration: Kayıt esnasında
 
-  field_is_for_new: Kayıt esnasında
   field_hint: İpucu
 
   label_full_name: Tam isim
