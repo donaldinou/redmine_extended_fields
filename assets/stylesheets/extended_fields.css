@@ -12,3 +12,7 @@ form.new_project input[type="text"].date_cf,
 form.edit_project input[type="text"].date_cf {
     width: auto;
 }
+#my_account_form input.link_cf,
+#my_account_form input.string_cf {
+    width: 90%;
+}
