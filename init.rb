@@ -66,10 +66,10 @@ Rails.configuration.to_prepare do
     unless QueriesHelper.included_modules.include?(ExtendedQueriesHelperPatch)
         QueriesHelper.send(:include, ExtendedQueriesHelperPatch)
     end
+    unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
+        CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
+    end
     if defined?(Redmine::CustomFieldFormat)
-        unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
-            CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
-        end
         unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
             CustomField.send(:include, ExtendedCustomFieldPatch)
         end
