@@ -20,7 +20,7 @@ module ExtendedFieldsHelperPatch
     module InstanceMethods
 
         def show_extended_value(custom_value, html = true)
-            if custom_value.value && !custom_value.value.empty?
+            if custom_value.value && !custom_value.value.empty? &&
                (template = find_custom_field_template(custom_value.custom_field))
                 render(:partial => template,
                        :locals  => { :controller   => controller,

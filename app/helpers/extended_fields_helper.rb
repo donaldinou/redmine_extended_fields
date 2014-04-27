@@ -1,6 +1,6 @@
 module ExtendedFieldsHelper
 
-    def find_custom_field_template(custom_field)
+    def find_custom_field_template(custom_field) # FIXME skip link?
         filename = custom_field.name.gsub(%r{[^a-z0-9_]+}i, '_').downcase
         filename.gsub!(%r{(^_+|_+$)}, '')
 
