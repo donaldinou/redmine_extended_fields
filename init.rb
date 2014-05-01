@@ -83,8 +83,10 @@ Rails.configuration.to_prepare do
     unless CustomValue.included_modules.include?(ExtendedCustomValuePatch)
         CustomValue.send(:include, ExtendedCustomValuePatch)
     end
-    unless Query.included_modules.include?(ExtendedCustomQueryPatch)
-        Query.send(:include, ExtendedCustomQueryPatch)
+    if defined?(Redmine::CustomFieldFormat)
+        unless Query.included_modules.include?(ExtendedCustomQueryPatch)
+            Query.send(:include, ExtendedCustomQueryPatch)
+        end
     end
     unless Project.included_modules.include?(ExtendedProjectPatch)
         Project.send(:include, ExtendedProjectPatch)
