@@ -63,6 +63,11 @@ Rails.configuration.to_prepare do
     unless CalendarsController.included_modules.include?(ExtendedCalendarsControllerPatch)
         CalendarsController.send(:include, ExtendedCalendarsControllerPatch)
     end
+    if Redmine::VERSION::MAJOR == 2 && Redmine::VERSION::MINOR < 5
+        unless ApplicationHelper.included_modules.include?(ExtendedApplicationHelperPatch)
+            ApplicationHelper.send(:include, ExtendedApplicationHelperPatch)
+        end
+    end
     unless QueriesHelper.included_modules.include?(ExtendedQueriesHelperPatch)
         QueriesHelper.send(:include, ExtendedQueriesHelperPatch)
     end
