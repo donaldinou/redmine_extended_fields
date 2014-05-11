@@ -15,9 +15,19 @@ module ExtendedQueriesHelperPatch
 
         def column_content_with_extended(column, issue)
             if column.is_a?(QueryCustomFieldColumn)
-                value = issue.custom_field_values.detect{ |value| value.custom_field_id == column.custom_field.id }
+                if defined?(QueryAssociationCustomFieldColumn) && column.is_a?(QueryAssociationCustomFieldColumn)
+                    issue = issue.send(column.instance_variable_get(:@association))
 
-                h(show_value(value))
+                    return nil unless issue
+                end
+
+                if column.custom_field.visible_by?(issue.project, User.current)
+                    value = issue.custom_field_values.detect{ |value| value.custom_field_id == column.custom_field.id }
+
+                    h(show_value(value))
+                else
+                    nil
+                end
             else
                 value = column.value(issue)
 
