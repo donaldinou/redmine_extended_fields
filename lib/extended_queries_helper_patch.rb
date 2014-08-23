@@ -21,7 +21,7 @@ module ExtendedQueriesHelperPatch
                     return nil unless issue
                 end
 
-                if column.custom_field.visible_by?(issue.project, User.current)
+                if !column.custom_field.respond_to?(:visible_by?) || column.custom_field.visible_by?(issue.project, User.current)
                     value = issue.custom_field_values.detect{ |value| value.custom_field_id == column.custom_field.id }
 
                     h(show_value(value))
