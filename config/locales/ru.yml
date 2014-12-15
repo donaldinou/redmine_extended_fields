@@ -2,6 +2,7 @@ ru:
   label_wiki_text: Текст Wiki
   label_link: Ссылка
   label_on_registration: Во время регистрации
+  label_shown_on_project_page: Отображается на странице проекта
 
   field_hint: Подсказка
 

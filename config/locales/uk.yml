@@ -2,6 +2,7 @@ uk:
   label_wiki_text: Текст Wiki
   label_link: Посилання
   label_on_registration: Під час реєстрації
+  label_shown_on_project_page: Відображається на сторінці проекту
 
   field_hint: Підказка
 

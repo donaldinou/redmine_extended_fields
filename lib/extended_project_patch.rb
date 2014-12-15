@@ -4,8 +4,9 @@ module ExtendedProjectPatch
 
     def self.included(base)
         base.extend(ClassMethods)
+        base.send(:include, InstanceMethods)
         unless base.method_defined?(:archived?)
-            base.send(:include, ArchivedMethods)
+            base.send(:include, ArchivedMethod)
         end
     end
 
@@ -28,7 +29,7 @@ module ExtendedProjectPatch
                                :align => :center),
             ExtendedColumn.new(:latest_downloads,
                                :caption => :label_latest_downloads,
-                               :value => lambda { |project| (version = project.versions.sort.reverse.select{ |version| version.closed? }.first) && version.attachments.inject(0) { |count, attachment| count += attachment.downloads } },
+                               :value => lambda { |project| project.latest_version && project.latest_version.attachments.inject(0) { |count, attachment| count += attachment.downloads } },
                                :align => :center),
             ExtendedColumn.new(:maximum_downloads,
                                :caption => :label_maximum_downloads,
@@ -41,15 +42,15 @@ module ExtendedProjectPatch
                                :align => :center),
             ExtendedColumn.new(:latest_files,
                                :caption => :label_latest_files,
-                               :value => lambda { |project| (version = project.versions.sort.reverse.select{ |version| version.closed? }.first) && version.attachments.size },
+                               :value => lambda { |project| project.latest_version && project.latest_version.attachments.size },
                                :align => :center),
             ExtendedColumn.new(:latest_version,
                                :caption => :label_latest_version,
-                               :value => lambda { |project| project.versions.sort.reverse.select{ |version| version.closed? }.first },
+                               :value => lambda { |project| project.latest_version },
                                :align => :center),
             ExtendedColumn.new(:next_version,
                                :caption => :label_next_version,
-                               :value => lambda { |project| project.versions.sort.select{ |version| !version.closed? }.first },
+                               :value => lambda { |project| project.versions.sort.select(&:closed?).first },
                                :align => :center),
             ExtendedColumn.new(:total_issues,
                                :caption => :label_total_issues,
@@ -134,11 +135,28 @@ module ExtendedProjectPatch
 
     end
 
-    module ArchivedMethods
+    module InstanceMethods
+
+        def visible_custom_field_values
+            if latest_version
+                super + latest_version.custom_field_values.select{ |custom_value| custom_value.custom_field.significant? }
+            else
+                super
+            end
+        end
+
+        def latest_version
+            @latest_version ||= versions.sort.reverse.select(&:closed?).first
+        end
+
+    end
+
+    module ArchivedMethod
 
         def archived?
             self.status == self.class::STATUS_ARCHIVED
         end
 
     end
+
 end
