@@ -49,9 +49,9 @@ module ExtendedFieldsHelperPatch
                                             :project      => @project,
                                             :request      => request,
                                             :custom_field => custom_value,
-                                            :name         => name,
-                                            :field_name   => field_name,
-                                            :field_id     => field_id })
+                                            :name         => prefix,
+                                            :field_name   => custom_field_tag_name(prefix, custom_field),
+                                            :field_id     => custom_field_tag_id(prefix, custom_field) })
             end
 
             tag
@@ -71,9 +71,9 @@ module ExtendedFieldsHelperPatch
                                             :project      => @project,
                                             :request      => request,
                                             :custom_field => custom_value,
-                                            :name         => name,
-                                            :field_name   => field_name,
-                                            :field_id     => field_id })
+                                            :name         => prefix,
+                                            :field_name   => custom_field_tag_name(prefix, custom_field),
+                                            :field_id     => custom_field_tag_id(prefix, custom_field) })
             end
 
             tag

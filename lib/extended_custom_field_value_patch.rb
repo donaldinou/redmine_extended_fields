@@ -7,11 +7,21 @@ module ExtendedCustomFieldValuePatch
         base.class_eval do
             unloadable
 
+            alias_method_chain :value,     :extended
             alias_method_chain :editable?, :extended
         end
     end
 
     module InstanceMethods
+
+        def value_with_extended
+            value = value_without_extended
+            if custom_field.multiple? && value.present? && value.size == 1 && value.first.nil?
+                nil
+            else
+                value
+            end
+        end
 
         def editable_with_extended?
             if !customized || customized.new_record?
