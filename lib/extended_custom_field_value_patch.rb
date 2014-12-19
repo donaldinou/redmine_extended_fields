@@ -16,8 +16,8 @@ module ExtendedCustomFieldValuePatch
 
         def value_with_extended
             value = value_without_extended
-            if custom_field.multiple? && value.present? && value.size == 1 && value.first.nil?
-                nil
+            if custom_field.multiple? && value.present?
+                value.select{ |item| item.present? }
             else
                 value
             end
