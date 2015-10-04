@@ -10,7 +10,7 @@ module ExtendedUserPatch
 
         @@available_columns_cache = []
 
-        @@available_columns = [
+        @@available_columns = [ # FIXME
             ExtendedColumn.new(:login, :css_classes => 'username'),
             ExtendedColumn.new(:firstname),
             ExtendedColumn.new(:lastname),

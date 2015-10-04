@@ -14,7 +14,7 @@ class ExtendedIssueStatusColumn < ExtendedColumn
     end
 
     def value(project)
-        Issue.count(:conditions => [ "project_id = ? AND status_id = ?", project.id, @status.id ])
+        Issue.where([ "project_id = ? AND status_id = ?", project.id, @status.id ]).count
     end
 
 end

@@ -14,7 +14,7 @@ module ExtendedProjectPatch
 
         @@available_columns_cache = []
 
-        @@available_columns = [
+        @@available_columns = [ # FIXME
             ExtendedColumn.new(:project, :css_classes => 'name'),
             ExtendedColumn.new(:description),
             ExtendedColumn.new(:homepage),
@@ -139,7 +139,8 @@ module ExtendedProjectPatch
 
         def visible_custom_field_values
             if latest_version
-                super + latest_version.custom_field_values.select{ |custom_value| custom_value.custom_field.significant? }
+                super.sort_by{ |custom_value| custom_value.custom_field.position } +
+                    latest_version.custom_field_values.select{ |custom_value| custom_value.custom_field.significant? }
             else
                 super
             end

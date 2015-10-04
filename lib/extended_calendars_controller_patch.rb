@@ -26,22 +26,22 @@ module ExtendedCalendarsControllerPatch
             @query.group_by = nil
             if @query.valid?
                 events = []
-                events += @query.issues(:include => [ :tracker, :assigned_to, :priority ],
+                events += @query.issues(:include => [ :tracker, :assigned_to, :priority ], # FIXME ?
                                         :conditions => [ "((start_date BETWEEN ? AND ?) OR (due_date BETWEEN ? AND ?))", @calendar.startdt, @calendar.enddt, @calendar.startdt, @calendar.enddt ])
                 events += @query.versions(:conditions => [ "effective_date BETWEEN ? AND ?", @calendar.startdt, @calendar.enddt ])
 
                 issue_ids = @query.respond_to?(:issue_ids) ? @query.issue_ids : @query.issues.collect(&:id)
-                events += CustomValue.find(:all, :include => :custom_field,
+                events += CustomValue.find(:all, :include => :custom_field, # FIXME
                                                  :conditions => [ "#{CustomField.table_name}.field_format = ? AND #{CustomValue.table_name}.customized_type = ? AND #{CustomValue.table_name}.customized_id IN (?) AND STR_TO_DATE(#{CustomValue.table_name}.value, '%Y-%m-%d') BETWEEN ? AND ?",
                                                                   'date', 'Issue', issue_ids, @calendar.startdt, @calendar.enddt ])
 
                 project_ids = @project ? [ @project.id ] : Project.visible.all.collect(&:id)
-                events += CustomValue.find(:all, :include => :custom_field,
+                events += CustomValue.find(:all, :include => :custom_field, # FIXME
                                                  :conditions => [ "#{CustomField.table_name}.field_format = ? AND #{CustomValue.table_name}.customized_type = ? AND #{CustomValue.table_name}.customized_id IN (?) AND STR_TO_DATE(#{CustomValue.table_name}.value, '%Y-%m-%d') BETWEEN ? AND ?",
                                                                   'date', 'Project', project_ids, @calendar.startdt, @calendar.enddt ])
 
                 version_ids = @project ? @project.versions.collect(&:id) : Version.visible.all.collect(&:id)
-                events += CustomValue.find(:all, :include => :custom_field,
+                events += CustomValue.find(:all, :include => :custom_field, # FIXME
                                                  :conditions => [ "#{CustomField.table_name}.field_format = ? AND #{CustomValue.table_name}.customized_type = ? AND #{CustomValue.table_name}.customized_id IN (?) AND STR_TO_DATE(#{CustomValue.table_name}.value, '%Y-%m-%d') BETWEEN ? AND ?",
                                                                   'date', 'Version', version_ids, @calendar.startdt, @calendar.enddt ])
 

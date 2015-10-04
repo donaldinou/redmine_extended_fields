@@ -1,7 +1,7 @@
 module Redmine
     module FieldFormat
 
-        class ProjectFormat < RecordList
+        class ProjectFormat < RecordList # FIXME how users etc are implemented?
             add 'project'
             self.customized_class_names = nil
             self.form_partial = 'custom_fields/formats/project'

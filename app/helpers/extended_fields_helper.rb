@@ -93,7 +93,7 @@ module ExtendedFieldsHelper
         when Project
             case column.name
             when :project
-                return content_tag(:span, link_to_project(object, { :action => 'settings' }, :title => object.short_description))
+                return content_tag(:span, link_to_project_settings(object, { }, :title => object.short_description))
             when :description
                 return textilizable(object.short_description, :project => object)
             when :created_on

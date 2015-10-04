@@ -19,4 +19,8 @@ class ExtendedQueryColumn < QueryColumn
         end
     end
 
+    def value_object(object)
+        value(object)
+    end
+
 end

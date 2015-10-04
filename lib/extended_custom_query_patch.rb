@@ -32,7 +32,7 @@ module ExtendedCustomQueryPatch
                     filter_id = "#{assoc}.#{filter_id}"
                     filter_name = l("label_attribute_of_#{assoc}", :name => filter_name)
                 end
-                @available_filters[filter_id] = options.merge({ :name => filter_name, :format => field.field_format }) if options
+                @available_filters[filter_id] = options.merge({ :name => filter_name, :format => field.field_format }) if options # FIXME add_custom_fields_filter
             end
         end
 
@@ -51,7 +51,7 @@ module ExtendedCustomQueryPatch
 
                 options.merge!({:format => field.field_format}) if options && Redmine::VERSION::MAJOR == 2 && !defined?(ChiliProject)
 
-                @available_filters["cf_#{field.id}"] = options.merge({ :name => field.name }) if options
+                @available_filters["cf_#{field.id}"] = options.merge({ :name => field.name }) if options # FIXME add_custom_fields_filter
             end
         end
 
