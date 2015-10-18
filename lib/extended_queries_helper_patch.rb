@@ -13,7 +13,7 @@ module ExtendedQueriesHelperPatch
 
     module InstanceMethods
 
-        def column_content_with_extended(column, issue)
+        def column_content_with_extended(column, issue) # FIXME needs to be updated to use #format_object
             if column.is_a?(QueryCustomFieldColumn)
                 if defined?(QueryAssociationCustomFieldColumn) && column.is_a?(QueryAssociationCustomFieldColumn)
                     issue = issue.send(column.instance_variable_get(:@association))

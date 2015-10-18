@@ -10,12 +10,12 @@ module ExtendedUserPatch
 
         @@available_columns_cache = []
 
-        @@available_columns = [ # FIXME
+        @@available_columns = [
             ExtendedColumn.new(:login, :css_classes => 'username'),
             ExtendedColumn.new(:firstname),
             ExtendedColumn.new(:lastname),
-            ExtendedColumn.new(:mail),
-            ExtendedColumn.new(:admin,  :align => :center),
+            ExtendedColumn.new(:mail,  :css_classes => 'email'),
+            ExtendedColumn.new(:admin, :css_classes => 'tick'),
             ExtendedColumn.new(:status, :align => :center),
             ExtendedColumn.new(:language),
             ExtendedColumn.new(:auth_source),
@@ -27,11 +27,11 @@ module ExtendedUserPatch
                                :value => lambda { |user| user.name }),
             ExtendedColumn.new(:assigned_issues,
                                :caption => :label_assigned_issues,
-                               :value => lambda { |user| Issue.count(:conditions => [ "assigned_to_id = ?", user.id ]) },
+                               :value => lambda { |user| Issue.where([ "assigned_to_id = ?", user.id ]).count },
                                :align => :center),
             ExtendedColumn.new(:assigned_open_issues,
                                :caption => :label_assigned_open_issues,
-                               :value => lambda { |user| Issue.open.count(:conditions => [ "assigned_to_id = ?", user.id ]) },
+                               :value => lambda { |user| Issue.open.where([ "assigned_to_id = ?", user.id ]).count },
                                :align => :center)
         ]
 

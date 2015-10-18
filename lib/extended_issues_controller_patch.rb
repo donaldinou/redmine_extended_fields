@@ -10,10 +10,10 @@ module ExtendedIssuesControllerPatch
 
         # Overriding existing method
         def fetch_row_values(issue, query, level)
-            query.columns.collect do |column|
+            query.inline_columns.collect do |column|
                 s = if column.is_a?(QueryCustomFieldColumn)
-                    cv = issue.custom_field_values.detect {|v| v.custom_field_id == column.custom_field.id}
-                    show_value(cv)
+                    cv = issue.visible_custom_field_values.detect {|v| v.custom_field_id == column.custom_field.id}
+                    show_value(cv, false)
                 elsif column.is_a?(ExtendedQueryColumn)
                     column.value(issue)
                 else

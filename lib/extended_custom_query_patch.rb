@@ -1,6 +1,6 @@
 require_dependency 'query'
 
-module ExtendedCustomQueryPatch
+module ExtendedCustomQueryPatch # FIXME obsolete
 
     def self.included(base)
         if Redmine::VERSION::MAJOR < 2 || (Redmine::VERSION::MAJOR == 2 && Redmine::VERSION::MINOR == 0) || defined?(ChiliProject)

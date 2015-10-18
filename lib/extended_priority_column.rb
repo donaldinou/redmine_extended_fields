@@ -20,11 +20,11 @@ class ExtendedPriorityColumn < ExtendedColumn
         l(@caption, :priority => @priority.name)
     end
 
-    def value(project) # FIXME
+    def value(project)
         if @open
-            Issue.open.count(:conditions => [ "project_id = ? AND priority_id = ?", project.id, @priority.id ])
+            Issue.open.where([ "project_id = ? AND priority_id = ?", project.id, @priority.id ]).count
         else
-            Issue.count(:conditions => [ "project_id = ? AND priority_id = ?", project.id, @priority.id ])
+            Issue.where([ "project_id = ? AND priority_id = ?", project.id, @priority.id ]).count
         end
     end
 

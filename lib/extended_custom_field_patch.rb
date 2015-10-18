@@ -1,6 +1,6 @@
 require_dependency 'custom_field'
 
-module ExtendedCustomFieldPatch
+module ExtendedCustomFieldPatch # FIXME obsolete
 
     def self.included(base)
         base.send(:include, AliasCastValueMethod)

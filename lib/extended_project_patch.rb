@@ -14,7 +14,7 @@ module ExtendedProjectPatch
 
         @@available_columns_cache = []
 
-        @@available_columns = [ # FIXME
+        @@available_columns = [
             ExtendedColumn.new(:project, :css_classes => 'name'),
             ExtendedColumn.new(:description),
             ExtendedColumn.new(:homepage),
@@ -24,8 +24,8 @@ module ExtendedProjectPatch
             ExtendedColumn.new(:updated_on, :align => :center),
             ExtendedColumn.new(:active,     :align => :center),
             ExtendedColumn.new(:downloads,
-                               :value => lambda { |project| Attachment.sum(:downloads,
-                                                                           :conditions => [ "(container_type = 'Project' AND container_id = ?) OR (container_type = 'Version' AND container_id IN (?))", project.id, project.versions.collect{ |version| version.id } ]) },
+                               :value => lambda { |project| Attachment.where([ "(container_type = 'Project' AND container_id = ?) OR (container_type = 'Version' AND container_id IN (?))", project.id, project.versions.collect{ |version| version.id } ])
+                                                                      .sum(:downloads) },
                                :align => :center),
             ExtendedColumn.new(:latest_downloads,
                                :caption => :label_latest_downloads,
@@ -33,8 +33,8 @@ module ExtendedProjectPatch
                                :align => :center),
             ExtendedColumn.new(:maximum_downloads,
                                :caption => :label_maximum_downloads,
-                               :value => lambda { |project| Attachment.maximum(:downloads,
-                                                                               :conditions => [ "(container_type = 'Project' AND container_id = ?) OR (container_type = 'Version' AND container_id IN (?))", project.id, project.versions.collect{ |version| version.id } ]) },
+                               :value => lambda { |project| Attachment.where([ "(container_type = 'Project' AND container_id = ?) OR (container_type = 'Version' AND container_id IN (?))", project.id, project.versions.collect{ |version| version.id } ])
+                                                                      .maximum(:downloads) },
                                :align => :center),
             ExtendedColumn.new(:files,
                                :caption => :label_file_plural,
@@ -79,8 +79,8 @@ module ExtendedProjectPatch
             ExtendedColumn.new(:repository_files,
                                :caption => :label_repository_files,
                                :value => lambda { |project| project.repository && (project.respond_to?(:repositories) ?
-                                                            project.repositories.inject(0) { |count, repository| Change.count(:path, :distinct => true, :include => [ :changeset ], :conditions => [ "repository_id = ?", repository.id ]) } :
-                                                            Change.count(:path, :distinct => true, :include => [ :changeset ], :conditions => [ "repository_id = ?", project.repository.id ])) },
+                                                            project.repositories.inject(0) { |count, repository| Change.joins(:changeset).where([ "repository_id = ?", repository.id ]).distinct.count(:path) } :
+                                                            Change.joins(:changeset).where([ "repository_id = ?", project.repository.id ]).distinct.count(:path)) },
                                :align => :center),
             ExtendedColumn.new(:forums,
                                :caption => :label_board_plural,

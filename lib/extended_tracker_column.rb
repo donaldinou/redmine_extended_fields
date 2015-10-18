@@ -19,11 +19,11 @@ class ExtendedTrackerColumn < ExtendedColumn
         l(@caption, :tracker => @tracker.name)
     end
 
-    def value(project) # FIXME
+    def value(project)
         if @options[:open]
-            Issue.open.count(:conditions => [ "project_id = ? AND tracker_id = ?", project.id, @tracker.id ])
+            Issue.open.where([ "project_id = ? AND tracker_id = ?", project.id, @tracker.id ]).count
         else
-            Issue.count(:conditions => [ "project_id = ? AND tracker_id = ?", project.id, @tracker.id ])
+            Issue.where([ "project_id = ? AND tracker_id = ?", project.id, @tracker.id ]).count
         end
     end
 

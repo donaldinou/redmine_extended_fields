@@ -76,7 +76,7 @@ Rails.configuration.to_prepare do
     unless CustomFieldsHelper.included_modules.include?(ExtendedFieldsHelperPatch)
         CustomFieldsHelper.send(:include, ExtendedFieldsHelperPatch)
     end
-    if defined?(Redmine::CustomFieldFormat)
+    if defined?(Redmine::CustomFieldFormat) # FIXME obsolete
         unless CustomField.included_modules.include?(ExtendedCustomFieldPatch)
             CustomField.send(:include, ExtendedCustomFieldPatch)
         end
@@ -90,7 +90,7 @@ Rails.configuration.to_prepare do
     unless CustomValue.included_modules.include?(ExtendedCustomValuePatch)
         CustomValue.send(:include, ExtendedCustomValuePatch)
     end
-    if defined?(Redmine::CustomFieldFormat)
+    if defined?(Redmine::CustomFieldFormat) # FIXME obsolete
         unless Query.included_modules.include?(ExtendedCustomQueryPatch)
             Query.send(:include, ExtendedCustomQueryPatch)
         end
