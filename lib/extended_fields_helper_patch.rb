@@ -8,6 +8,7 @@ module ExtendedFieldsHelperPatch
         else
             base.send(:include, ObsoleteMethods)
         end
+        base.send(:include, ExtendedFieldsHelper)
         base.class_eval do
             unloadable
 

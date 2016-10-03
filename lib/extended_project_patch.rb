@@ -74,7 +74,7 @@ module ExtendedProjectPatch
                                :align => :center),
             ExtendedColumn.new(:repository_type,
                                :caption => :label_repository_type,
-                               :value => lambda { |project| project.repository && (project.repository.type.is_a?(Class) ? project.repository.type.name.gsub(%r{^Repository::}, '') : project.repository.type) },
+                               :value => lambda { |project| project.repository && (project.repository.type.is_a?(Class) ? project.repository.type.name.gsub(%r{^Repository::}, '') : project.repository.type) }, # FIXME
                                :align => :center),
             ExtendedColumn.new(:repository_files,
                                :caption => :label_repository_files,

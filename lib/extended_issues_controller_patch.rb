@@ -4,6 +4,7 @@ module ExtendedIssuesControllerPatch
 
     def self.included(base)
         base.send(:include, InstanceMethods)
+        base.send(:include, ExtendedFieldsHelper)
     end
 
     module InstanceMethods
